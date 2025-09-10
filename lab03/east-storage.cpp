@@ -29,12 +29,13 @@ int main(){
     double EastSt, EastEl, WestSt, WestEl;
     std::cout << "Enter date: ";
     std::cin >> targetDate;
-    while(fin >>date >> EastSt >> EastEl >> WestSt >> WestEl){
+    while(fin >> date >> EastSt >> EastEl >> WestSt >> WestEl){
         //loop until we get the target row 
+        fin.ignore(INT_MAX, '\n');
         if(date == targetDate){
             fin.close();
         }
-        fin.ignore(INT_MAX, '\n');
+        
     }
     
     std::cout << "East basin storage: " << EastSt << " billion gallons" << std::endl;
