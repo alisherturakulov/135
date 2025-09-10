@@ -24,12 +24,22 @@ int main(){
     }
     std::string junk;
     std::getline(fin, junk);
-    std:: string date;
-    double EastSt, EastEl, WestSt, WestEl;
     
-   // while(fin >>){}
-    //}
+    std::string date, targetDate;
+    double EastSt, EastEl, WestSt, WestEl;
+    std::cout << "Enter date: ";
+    std::cin >> targetDate;
+    while(fin >>date >> EastSt >> EastEl >> WestSt >> WestEl){
+        //loop until we get the target row 
+        if(date == targetDate){
+            fin.close();
+        }
+        fin.ignore(INT_MAX, '\n');
+    }
+    
+    std::cout << "East basin storage: " << EastSt << " billion gallons" << std::endl;
+    
+    //fin.close();
 
-    fin.close();
     return 0;
 }
