@@ -17,16 +17,17 @@ the min and max east basin scores.
 int main(){
     std::ifstream fin("Current_Reservoir_Levels.tsv");
     if(fin.fail()){
-        std::cerr << "" << std::endl;
+        std::cerr << "File not found" << std::endl;
         std::exit(1);
     }
 
     std::string header;
     getline(fin, header);
 
-    int max{INT_MIN};
-    int min{INT_MAX};
-    std::string date, EastSt, EastEl, WestSt, WestEl;
+    double max{INT_MIN};
+    double min{INT_MAX};
+    std::string date;
+    double EastSt, EastEl, WestSt, WestEl;
     //go down all dates; all data from 2018
     while(fin >> date >> EastSt >> EastEl >> WestSt >> WestEl){
         fin.ignore(INT_MAX, '\n');
