@@ -4,14 +4,16 @@ Instructor: Tong Yee
 Course: CSCI 136
 Assignment: lab3C
 
-takes in two dates on an interval and 
-prints each date and West East or Both for the higher elevations on that date
+takes in two dates (MM/DD/YYYY) on an interval and 
+prints each date and  wheter West East Both had higher elevations 
+
 */
 
 #include <iostream>
 #include <fstream>
 #include <climits>
 #include <cstdlib>
+
 
 int main(){
     std::ifstream fin("Current_Reservoir_Levels.tsv");
@@ -38,12 +40,19 @@ int main(){
     while(fin >> date >> EastSt >> EastEl >> WestSt >> WestEl){
         fin.ignore(INT_MAX, '\n');
         //start processing rows if inInverval is true
-        if(date == startDate ){
-
+        if(date == startDate){
+            inInterval = true;
+        }
+        if(inInterval){ //compare elevations
+            //using ternary ops
+            std::cout << date << " " << ( (EastEl == WestEl) ? "Both" : ((EastEl > WestEl) ? "East": "West") ) << '\n';
+        
+            //std::cout << EastEl << ";" << WestEl << "\n";
         }
 
         //stop once endingDate processed
         if(date == endDate){
+            inInterval = false;
             fin.close();
         }
     }
