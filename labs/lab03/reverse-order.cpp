@@ -44,10 +44,11 @@ int main(){
     std::cin >> eDate;
     std::cout << "\n";
     int i{}; //index
-    const int SIZE = std::string::compare(sDate, eDate);
-    std::cout << "size: " << SIZE << std::endl;
-    std::string dates[SIZE];
-    double wElevations[SIZE];
+	//std::cout << sDate.compare(eDate);
+    //const int SIZE = sDate.compare(eDate);
+    //std::cout << "size: " << SIZE << std::endl;
+    //std::string dates[SIZE];
+    //double wElevations[SIZE];
     
 
     while(fin >> date >> EastSt >> EastEl >> WestSt >> WestEl){
@@ -59,10 +60,12 @@ int main(){
             wElevations[i] = WestEl;
             i++;
         }
-        if(date == eDate){
+		//end the interval if eDate or last date is reached
+        if(date == eDate || date == "12/30/2018"){
             fin.close();
             
         }
+		//ignores the rest of the columns including the '\n'
         fin.ignore(INT_MAX, '\n');
     }
     //print the date elevation pairs in reverse order 
