@@ -85,6 +85,6 @@ Intro to Classses:
 #include <iostream>
 
 int main(){
-
+    std::cout << "open file to see notes";
     return 0;
 }
