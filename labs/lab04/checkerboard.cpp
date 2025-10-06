@@ -24,12 +24,14 @@ int main(){
 	//print the checlerboard
 	for(int i= 0; i< height; i++){
 		for(int j =0; j< width; j++){
-			//if even row put spaces after each asterisk
-			if(i % 2 ==0){
-				std::cout << "* ";
+			//print an asterisk when row and col have same parity
+			if(i % 2 ==0 && j % 2 ==0){
+				std::cout << "*";
+			}else if(i% 2 == 1 && j % 2 == 1){
+				std::cout << "*";
 			}else{
-			//spaces before each asterisk for odd rows
-				std::cout << " *";
+				//otherwise print spaces
+				std::cout << " ";
 			}
 		}
 		std::cout << '\n';

@@ -24,7 +24,7 @@ int main(){
 	
 	
 	//check that the height is reasonable with the given width
-	if(height > width/2 + 1){
+	if(((width % 2 == 0) && (height > width/2) )||( (width%2 == 1) && (height > width/2 +1))){
 		std::cerr << "Impossible shape!" << std::endl;
 		std::exit(1);
 	}
