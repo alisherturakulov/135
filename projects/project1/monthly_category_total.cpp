@@ -31,27 +31,30 @@ std::string getCategory(std::string& row){
 void mySort(std::string arr[], int end){
 	//std::string max = arr[0];
 	int max{};
-	for(int i =0; i<end; ++i){
+	while(end > 0){
 		max = end-1;
-		for(int j =i; j <end; ++j){
+		for(int j =0; j <end; ++j){
 			if(arr[j] > arr[max]){
 				max = j;
 			}
-		}
-		//std::cout << arr[max];
-		//swap max value with end
-		if(arr[max] > arr[end-1]){
-		std::string temp = arr[max];
-		arr[max] = arr[end-1];
-		arr[end-1] = temp;
+			if(j == end-1 && arr[max] > arr[end-1]){
+				//swap max with end
+				std::string temp = arr[max];
+				arr[max] = arr[end-1];
+				arr[end-1] = temp;
+			}
 		}
 		//move end down
-		end--;
+		--end;
 	}
 }
 
 int main(){
-	
+	/*std::string s[] = {"a", "A", "b", "B", "BC"};
+	mySort(s, 5);
+	for(std::string& str: s){
+		std::cout << str << std::endl;
+	}*/
     std::string fname;
     std::cout << "Enter a csv file name: ";
     std::cin >> fname;
@@ -102,8 +105,8 @@ int main(){
 	
 	
     //sort category array using built in sort
-	
-    std::sort(categories, categories+categoryIndex);
+	mySort(categories, categoryIndex);
+    //std::sort(categories, categories+categoryIndex);
 	//for(auto& s : categories){
 	//	std::cout << s << ", ";
 	//}
