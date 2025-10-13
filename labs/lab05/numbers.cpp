@@ -8,7 +8,9 @@ A Takes two integers, n and d. Prints whether n is divisible by d.
 B Takes an integer n and returns whether it is prime
 C takes an integer n and returns the next prime number greater than n
 D takes in two ints a, b and returns the count of primes in [a,b]
-E 
+E takes in a integer n, returns if it is a twin prime or not as a bool
+F takes in a integer n, returns the next twin prime
+G takes in two integers a and b representing a range; returns largest twin prime in [a,b]
 */
 
 #include <iostream>
@@ -29,7 +31,7 @@ bool isPrime(int n){
 	}else if(n <= 3){
 		return true;
 	}
-	for(int i=2; i< end; ++i){
+	for(int i=2; i<= end; ++i){
 		if(n % i == 0){
 			 return false;
 		}
@@ -61,14 +63,33 @@ int countPrimes(int a, int b){
 
 //E
 bool isTwinPrime(int n){
-	return isPrime(n+2) || isPrime(n-2);
+	
+	return isPrime(n) && ( isPrime(n+2) || isPrime(n-2) );
 }
 
+//F
+int nextTwinPrime(int n){
+	//loop until we find the next twin prime
+	while(!isTwinPrime(++n));
+	return n;
+}
+
+//G
+int largestTwinPrime(int a, int b){
+	for(int i= b; i>= a; i--){
+		if(isTwinPrime(i)){
+			return i;
+		}
+	}
+	return -1;
+}
 
 int main(){
     int n{};
     int d{};
-    /*std::cout << "Enter number to divide: ";
+	int m{};
+    /*
+	std::cout << "Enter number to divide: ";
     std::cin >> n;
     std::cout << "Enter divisor: ";
     std::cin >> d;
@@ -91,16 +112,34 @@ int main(){
 	std::cin >> n;
 	std::cout << "Next prime after " << n << " is: " << nextPrime(n) << '\n';
 	
-	int m{};
+	
 	std::cout << "Enter two integers to count the number of primes between them: ";
 	while(std::cin >> n >> m && n > m){
 		std::cout << "Error, first number needs to be <= second number, re-enter: ";
 	}
 	std::cout << "There are " << countPrimes(n, m) << " primes in the interval [" << n << "," << m << "]\n";
-	*/
-
+	
 	std::cout << "Enter number to check if its a twin prime: ";
 	std::cin >> n;
 	std::cout<< ((isTwinPrime(n)) ? "Yes" : "No") << '\n';
+	*/
+	
+	std::cout << "Enter a number to find the next twin prime: ";
+	std::cin >> n;
+	std::cout << nextTwinPrime(n);
+	//std::cout << "The next twin prime greater than " << n << " is: " << nextTwinPrime(n)<<'\n';
+	/*
+	do{
+	std::cout << "Enter two integers to find the largest twin prime between them inclusive: ";
+	std::cin >> n >> m;;
+	}while(n >m);
+	int l = largestTwinPrime(n,m);
+	std::cout << l <<std::endl;
+	if(l != -1){
+		std::cout << "The largest twin prime in ["<<n<<","<<m<<"] is " << l<<'\n';
+	}else{
+		std::cout << "No twin prime exists in [" << n<<","<<m<<"]\n";
+	}
+ */	
     return 0;
 }
