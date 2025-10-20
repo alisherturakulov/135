@@ -38,7 +38,7 @@ char shiftChar(char& ch, int shift){
 	if(!std::isalpha(ch)){
 		return ch;
 	}
-	int shiftChar = shift+ch;
+	
 	//when the letter is upper and a shift would pass Z
 	if(ch < 91 && (shift + ch > 90)){
 		//subtract num of chars to z
