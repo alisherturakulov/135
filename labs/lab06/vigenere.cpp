@@ -39,11 +39,30 @@ char shiftChar(char& ch, int shift){
 		return ch;
 	}
 	int shiftChar = shift+ch;
-	if(ch < 91 && (shift + (int)ch > 90)){
+	//when the letter is upper and a shift would pass Z
+	if(ch < 91 && (shift + ch > 90)){
+		//subtract num of chars to z
+		//char value to add to for overflow
+		const int BEFORE_A = 64;
 		
+		shift = shift - (90-ch);
+		//handle further overflow by taking remainder
+		shift %= 26;
+		
+		ch = BEFORE_A +shift;
+	//when the letter is lower and shift passes z	
+	}else if(ch < 123 && (shift + ch > 122)){
+		const int BEFORE_a = 96;
+		
+		shift = shift - (122 - ch);
+		shift %= 26;
+		
+		ch = BEFORE_a +shift;
+	}else{
+		ch = ch+shift;
 	}
 	
-	return '0';
+	return ch;
 }
 
 //@params plaintext string to apply vigenere 
@@ -58,7 +77,8 @@ std::string encryptVigenere(std::string plaintext, std::string keyword){
 		//only shift letters
 		char curr = plaintext[i];
 		if(std::isalpha(curr)){
-			
+			//'a' represents a shift of zero, 'b' 1, ...; 
+			//so, we need to -65 to get the shift
 			int shift = keyword[keyIndex]-'a';
 			char newChar = shiftChar(curr, shift);
 			plaintext[i] = newChar;
