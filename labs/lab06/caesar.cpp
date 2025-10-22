@@ -34,6 +34,9 @@ int main(){
 }
 
 char shiftChar(char c, int rshift){
+    if(!std::isalpha(c)){
+        return c;
+    }
     //convert to int
     int cInt = (int) c;
     //std::cout << c << " is ; " << cInt<< '\n';
