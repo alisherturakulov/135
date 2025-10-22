@@ -38,11 +38,12 @@ std::string getCategory(std::string row){
     return category;
 }
 
-//reads from fstream to add category totals to an array
-//@param fin, reference to a opened input fstream
-//@param category, category to get the totals for
-//@param totals, a zero-initialized array of 12 doubles 
-void getMonthlyCatTotal(std::ifstream fin&, std::string category, double totals[]){
+//reads the category, date, and amount from a line and adds to the monthly total spending array
+//@param row, line of text from csv file
+//@param monthySpending, a zero-initialized array of double arrays holding monthlySpending 
+//       dmensions: # of categories by 12 (months)  
+//@param categoryList, the sorted list of the categories
+void getMonthlyCatTotal(std::string row, double monthlySpending[][], std::string categoryList[]){
 
 }
 
@@ -103,6 +104,17 @@ int main(){
     //get ready to reread for each category
     fin.reset();
     fin.seekg(0);
+    if(fin.fail()){
+        std::cerr << "Cant reopen file";
+        std::exit(1);
+    }
+
+    while(getline(fin, row)){
+        //apply increments to corresponding monthlySpending indices
+        getMonthlyCatTotal(row, monthlySpending, categoryList);
+        
+    }
+    
     return 0;
 }
 
