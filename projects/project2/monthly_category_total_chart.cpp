@@ -18,33 +18,41 @@ Uses helper functions defined below.
 #include <fstream>
 #include <cstdlib>
 
-//sorts an array of strings in ascending order
+//sorts an array of strings in ascending order, using insertion sort
 //@param end, index to sort until
 //@param arr, string array to sort
-void selectionSort(std::string arr[], int end){
-    for(){
-        for(){
-
-        }
+void insertionSort(std::string arr[], int end){
+    for(int i = 1; i< end; ++i){
+		std::string current = arr[i];
+		int j =i;
+		while(arr[j] >= arr[i]){
+			j--;
+		}
+		arr[i] = arr[j];
+		arr[j] = current;
     }
 }
 
 //retrieves and returns the row string from a line from a spending csv file
 //@param row, the line from the csv file
 //@return the category string
-std::string getCategory(std::string row){
-
+std::string getCategory(std::string& row){
     std::string category;
+	int indicesBefore2nd = row.find(",", row.find(",")+1);
+	int firstComma = row.find(",");
+	int secondComma = row.find(",", firstComma+1);
+	int lastComma = row.find_last_of(',');
+	category = row.substr(secondCommma+1, lastComma-secondComma);
     return category;
 }
 
-//reads the category, date, and amount from a line and adds to the monthly total spending array
+//reads the amount from a line and returns the double value
 //@param row, line of text from csv file
-//@param monthySpending, a zero-initialized array of double arrays holding monthlySpending 
-//       dmensions: # of categories by 12 (months)  
-//@param categoryList, the sorted list of the categories
-void getMonthlyCatTotal(std::string row, double monthlySpending[][], std::string categoryList[]){
-
+double getTotal(const std::string& row) const{
+	int lastComma = row.find_last_of(',');
+	std::string amountStr = row.substr(lastComma+1);
+	double amount = std::stod(amountStr);
+	return amount;
 }
 
 
@@ -105,13 +113,20 @@ int main(){
     fin.reset();
     fin.seekg(0);
     if(fin.fail()){
-        std::cerr << "Cant reopen file";
+        std::cerr << "Cannot reopen file";
         std::exit(1);
     }
 
     while(getline(fin, row)){
         //apply increments to corresponding monthlySpending indices
-        getMonthlyCatTotal(row, monthlySpending, categoryList);
+        double amount = agetTotal(row);
+		std::string& category = getCategory(row);
+		int catIndex = 0;
+		for(int i =0; i< categoriesEnd; ++i){
+			if(categories[i] == category){
+				
+			}
+		}
         
     }
     
