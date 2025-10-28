@@ -91,7 +91,7 @@ int main(){
     }
 
     //sort the category list
-    selectionSort(categoryList, categoriesEnd);
+    insertionSort(categoryList, categoriesEnd);
 
     std::cout << "select one of the following categories \n";
     //print ordered category list
@@ -108,7 +108,7 @@ int main(){
     
     //array to hold total monthly spending for each category
     //where each index corresponds to the index in categoriesList;
-    double monthlySpending[categoriesEnd][12];
+    double monthlySpending[categoriesEnd][12] = {};
     //get ready to reread for each category
     fin.reset();
     fin.seekg(0);
@@ -119,14 +119,18 @@ int main(){
 
     while(getline(fin, row)){
         //apply increments to corresponding monthlySpending indices
-        double amount = agetTotal(row);
+        int firstSlash = row.find("/");
+		int monthIndex = std::stoi(row.substr(0, firstSlash));
+		double amount = agetTotal(row);
 		std::string& category = getCategory(row);
 		int catIndex = 0;
-		for(int i =0; i< categoriesEnd; ++i){
+		for(int i = 0; i< categoriesEnd; ++i){
 			if(categories[i] == category){
-				
+				catIndex= i;
+				i = categoriesEnd;
 			}
 		}
+		monthlySpending[catIndex][monthIndex] += amount;
         
     }
     
