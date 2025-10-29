@@ -24,12 +24,13 @@ Uses helper functions defined below.
 void insertionSort(std::string arr[], int end){
     for(int i = 1; i< end; ++i){
 		std::string current = arr[i];
-		int j =i;
-		while(arr[j] >= arr[i]){
-			j--;
+		int j =i-1;
+        //while the lower index element is greater, swap
+		while(j >= 0 && arr[j] > arr[i]){
+            arr[i] = arr[j];
+            arr[j] = current;
+			--j;
 		}
-		arr[i] = arr[j];
-		arr[j] = current;
     }
 }
 
@@ -42,13 +43,13 @@ std::string getCategory(std::string& row){
 	int firstComma = row.find(",");
 	int secondComma = row.find(",", firstComma+1);
 	int lastComma = row.find_last_of(',');
-	category = row.substr(secondCommma+1, lastComma-secondComma);
+	category = row.substr(secondComma+1, lastComma-secondComma);
     return category;
 }
 
 //reads the amount from a line and returns the double value
 //@param row, line of text from csv file
-double getTotal(const std::string& row) const{
+double getAmount(const std::string& row) {
 	int lastComma = row.find_last_of(',');
 	std::string amountStr = row.substr(lastComma+1);
 	double amount = std::stod(amountStr);
@@ -58,6 +59,20 @@ double getTotal(const std::string& row) const{
 
 
 int main(){
+    /*
+    //Test for insertionSort; pass
+    std::string arr[] = {"a", "A", "A", "B", "a", "z"};
+    insertionSort(arr, 6);
+    for(std::string& str : arr){
+        std::cout << str << " ";
+    }
+    //test for get functions; pass
+    std::string testRow= "01/,null,cat,10.00";
+    std::cout << "Category should be \"cat\": " << getCategory(testRow) <<'\n';
+    std::cout << "Amount should be 10.00: " << getAmount(testRow) << '\n';
+    */
+
+    /*
     std::cout << "Enter csv file name: ";
     std::string fname;
     std::ifstream fin(fname);
@@ -121,7 +136,7 @@ int main(){
         //apply increments to corresponding monthlySpending indices
         int firstSlash = row.find("/");
 		int monthIndex = std::stoi(row.substr(0, firstSlash));
-		double amount = agetTotal(row);
+		double amount = getAmount(row);
 		std::string& category = getCategory(row);
 		int catIndex = 0;
 		for(int i = 0; i< categoriesEnd; ++i){
@@ -133,6 +148,7 @@ int main(){
 		monthlySpending[catIndex][monthIndex] += amount;
         
     }
+    */
     
     return 0;
 }
