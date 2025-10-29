@@ -17,6 +17,7 @@ Uses helper functions defined below.
 #include <string>
 #include <fstream>
 #include <cstdlib>
+#include <iomanip>
 
 //sorts an array of strings in ascending order, using insertion sort
 //@param end, index to sort until
@@ -24,12 +25,15 @@ Uses helper functions defined below.
 void insertionSort(std::string arr[], int end){
     for(int i = 1; i< end; ++i){
 		std::string current = arr[i];
-		int j =i-1;
         //while the lower index element is greater, swap
-		while(j >= 0 && arr[j] > arr[i]){
-            arr[i] = arr[j];
-            arr[j] = current;
-			--j;
+		for(int j =i-1; j >= 0; --j){
+            //arr[i] will change so re-assign current
+            
+            if (arr[j] > arr[i]){
+                arr[i] = arr[j];
+                arr[j] = current;
+                current = arr[j];
+            }
 		}
     }
 }
@@ -37,13 +41,13 @@ void insertionSort(std::string arr[], int end){
 //retrieves and returns the row string from a line from a spending csv file
 //@param row, the line from the csv file
 //@return the category string
-std::string getCategory(std::string& row){
+std::string getCategory(const std::string& row){
     std::string category;
-	int indicesBefore2nd = row.find(",", row.find(",")+1);
 	int firstComma = row.find(",");
 	int secondComma = row.find(",", firstComma+1);
 	int lastComma = row.find_last_of(',');
-	category = row.substr(secondComma+1, lastComma-secondComma);
+    //subtract 1 to prevent inclusion of the last comma
+	category = row.substr(secondComma+1, lastComma-secondComma-1);
     return category;
 }
 
@@ -61,8 +65,8 @@ double getAmount(const std::string& row) {
 int main(){
     /*
     //Test for insertionSort; pass
-    std::string arr[] = {"a", "A", "A", "B", "a", "z"};
-    insertionSort(arr, 6);
+    std::string arr[] = {"a", "A", "A", "B", "apple","aapplw", "zeta"};
+    insertionSort(arr, 7);
     for(std::string& str : arr){
         std::cout << str << " ";
     }
@@ -72,9 +76,10 @@ int main(){
     std::cout << "Amount should be 10.00: " << getAmount(testRow) << '\n';
     */
 
-    /*
+    
     std::cout << "Enter csv file name: ";
     std::string fname;
+    std::cin >> fname;
     std::ifstream fin(fname);
     if(fin.fail()){
         std::cerr << "Cant open " << fname;
@@ -93,7 +98,7 @@ int main(){
     std::string row{};
     while(getline(fin, row)){
         std::string category = getCategory(row);
-        bool found= false;
+        bool found= false; //check if the category is already recorded
         for(int i =0; i< categoriesEnd; ++i){
             if(categoryList[i] == category){
                 found = true;
@@ -105,9 +110,12 @@ int main(){
         }
     }
 
+    for(std::string& str: categoryList){
+        std::cout << str << " ";
+    }
     //sort the category list
     insertionSort(categoryList, categoriesEnd);
-
+    
     std::cout << "select one of the following categories \n";
     //print ordered category list
     for(int i =0; i< categoriesEnd; ++i){
@@ -116,39 +124,59 @@ int main(){
 
     //get the chosen category
     int seekIndex{};
-    std::cout << "Choose a number in [" << 0 << "," << --categoriesEnd << "]";
+    std::cout << "Choose a number in [" << 0 << "," << --categoriesEnd << "] ";
     std::string seekCategory{};
     std::cin >> seekIndex;
     seekCategory =  categoryList[seekIndex];
     
-    //array to hold total monthly spending for each category
+    //zero-initialized array to hold total monthly spending for each category
     //where each index corresponds to the index in categoriesList;
     double monthlySpending[categoriesEnd][12] = {};
     //get ready to reread for each category
-    fin.reset();
+    fin.clear();
     fin.seekg(0);
+
     if(fin.fail()){
         std::cerr << "Cannot reopen file";
         std::exit(1);
     }
-
+    //remove header
+    getline(fin, header);
+    
     while(getline(fin, row)){
-        //apply increments to corresponding monthlySpending indices
+        //get the amount and category
         int firstSlash = row.find("/");
-		int monthIndex = std::stoi(row.substr(0, firstSlash));
+		int monthIndex = std::stoi(row.substr(0, firstSlash))-1;
 		double amount = getAmount(row);
-		std::string& category = getCategory(row);
+		std::string category = getCategory(row);
 		int catIndex = 0;
+        //locate the corresponding category's index
 		for(int i = 0; i< categoriesEnd; ++i){
-			if(categories[i] == category){
+			if(categoryList[i] == category){
 				catIndex= i;
 				i = categoriesEnd;
 			}
 		}
+        //add amount to corresponding monthlySpending indices
 		monthlySpending[catIndex][monthIndex] += amount;
-        
     }
-    */
+
+    //loop over monthly totals of all categories to find the maximum total
+    double maxMonTotal{};
+    std::string catM;
+    for(int i = 0 ; i < categoriesEnd; ++i){
+        for(int j= 0 ; j<12; ++j ){
+            double currentSpending = monthlySpending[i][j];
+            if(currentSpending > maxMonTotal){
+                maxMonTotal = currentSpending;
+                catM = categoryList[i];
+            }
+        }
+    }
+    std::cout << /*catM <<*/ "max monthly total across all categories = "<< maxMonTotal << '\n';
+    
+    std::cout << "MONTH" << std::setw(7) << std::right <<std::setw(12) << seekCategory << " " << "Total" << '\n';
+    
     
     return 0;
 }
