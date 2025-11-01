@@ -2,15 +2,16 @@
 Author: Alisherjon Turakulov
 Course: CS 135
 Instrcutor: Tong Yi
-Assignment: Project2A
+Assignment: Project2B
 
+Uses initial setup from Project2A to record into table
 Given a csv file with spending data, reads the file, 
-prints the spending categories in alphabetical order
-prompts the user to choose a category
-calculates and prints the maximum monthly total across categories
-then prints a chart of the monthly spending for a selected category
-adds rows of asterisks next to the chart 
-Uses helper functions defined below.
+and records monthly spending for each category into a 2d array
+prints a table with row number of months; each column being a category
+the final rows have total spending for each category
+and the percentage of the annual spending for each category total
+the final columns have total spending for each month
+the total annual spending is at the last row and column
 */
 
 #include <iostream>
@@ -179,19 +180,19 @@ int main(){
 		
 	}
 	
-    //loop over monthly totals of all categories to find the maximum total
-    double maxMonTotal{};
-    
-    for(int i = 0 ; i < categoriesEnd; ++i){
-        for(int j= 0 ; j<12; ++j ){
-            double currentSpending = monthlySpending[i][j];
-            if(currentSpending > maxMonTotal){
-                maxMonTotal = currentSpending;
-                //std::string catM = categoryList[i];
-            }
+    //loop over data to record total spending per month
+	//and per category in separate arrays
+    double monthTotals[12] = {};
+	double categoryTotals[20] = {};
+    for(int i = 0 ; i < 12; ++i){
+        for(int j= 0 ; j<categoriesEnd; ++j ){
+            double currentSpending = monthlySpending[j][i];
+			monthTotals[i] += currentSpending;
+			categoryTotals[j] += currentSpending;
         }
     }
-    std::cout << "max monthly total across all categories = "<< maxMonTotal << '\n';
+	
+    //std::cout << "max monthly total across all categories = "<< maxMonTotal << '\n';
     //using setw() to add witespace after month
     std::cout << "MONTH" << std::setw(7) << std::right <<std::setw(12) << seekCategory << " " << "TOTAL" << '\n';
 	std::string months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
