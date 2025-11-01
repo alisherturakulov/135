@@ -24,15 +24,13 @@ Uses helper functions defined below.
 //@param arr, string array to sort
 void insertionSort(std::string arr[], int end){
     for(int i = 1; i< end; ++i){
-		std::string current = arr[i];
         //while the lower index element is greater, swap
-		for(int j =i-1; j >= 0; --j){
-            //arr[i] will change so re-assign current
-            
-            if (arr[j] > arr[i]){
-                arr[i] = arr[j];
-                arr[j] = current;
-                current = arr[j];
+		for(int j =i; j > 0; --j){
+            //swap back until elem at index j is in correct position
+			std::string current = arr[j];
+            if (arr[j-1] > current){
+                arr[j] = arr[j-1];
+                arr[j-1] = current;
             }
 		}
     }
@@ -128,24 +126,29 @@ int main(){
     std::string seekCategory{};
     std::cin >> seekIndex;
     seekCategory =  categoryList[seekIndex];
-    
+    std::cout << "got: " << seekCategory << " index: " << seekIndex << '\n';
     //zero-initialized array to hold total monthly spending for each category
     //where each index corresponds to the index in categoriesList;
-    double monthlySpending[categoriesEnd][12] = {};
+	double monthlySpending[20][12] = {};
     //get ready to reread for each category
+	std::cout << "before clear" << fin.fail() <<'\n';
     fin.clear();
-    fin.seekg(0);
-
+	std::cout << "before seekg" << fin.fail() << '\n';
+	
+    fin.seekg(0, std::ios::beg);
+	std::cout << "after seekg" << fin.fail() << '\n';
+	
     if(fin.fail()){
         std::cerr << "Cannot reopen file";
         std::exit(1);
     }
+	/*
     //remove header
     getline(fin, header);
     
     while(getline(fin, row)){
         //get the amount and category
-        int firstSlash = row.find("/");
+        int firstSlash = row.find('/');
 		int monthIndex = std::stoi(row.substr(0, firstSlash))-1;
 		double amount = getAmount(row);
 		std::string category = getCategory(row);
@@ -163,21 +166,22 @@ int main(){
 
     //loop over monthly totals of all categories to find the maximum total
     double maxMonTotal{};
-    std::string catM;
+    //std::string catM;
     for(int i = 0 ; i < categoriesEnd; ++i){
         for(int j= 0 ; j<12; ++j ){
             double currentSpending = monthlySpending[i][j];
             if(currentSpending > maxMonTotal){
                 maxMonTotal = currentSpending;
-                catM = categoryList[i];
+                //catM = categoryList[i];
             }
         }
     }
-    std::cout << /*catM <<*/ "max monthly total across all categories = "<< maxMonTotal << '\n';
+    std::cout << "max monthly total across all categories = "<< maxMonTotal << '\n';
     
-    std::cout << "MONTH" << std::setw(7) << std::right <<std::setw(12) << seekCategory << " " << "Total" << '\n';
+    std::cout << "MONTH" << std::setw(7) << std::right <<std::setw(12) << seekCategory << " " << "TOTAL" << '\n';
     
-    
+    */
+	
     return 0;
 }
 
