@@ -58,6 +58,14 @@ double getAmount(const std::string& row) {
 	return amount;
 }
 
+//print asterisks inline to represent an amount (one * = 5)
+//@param amount, a double to be represented
+void printBar(double amount){
+	int numAsterisks = amount / 5;
+	for(int i =0; i< numAsterisks; ++i){
+		std::cout << '*';
+	}
+}
 
 
 int main(){
@@ -131,22 +139,28 @@ int main(){
     //where each index corresponds to the index in categoriesList;
 	double monthlySpending[20][12] = {};
     //get ready to reread for each category
-	std::cout << "before clear" << fin.fail() <<'\n';
+	/*std::cout << "before clear" << fin.fail() <<'\n';
     fin.clear();
 	std::cout << "before seekg" << fin.fail() << '\n';
-	
+	int offset{};//for seekg()
     fin.seekg(0, std::ios::beg);
 	std::cout << "after seekg" << fin.fail() << '\n';
 	
-    if(fin.fail()){
-        std::cerr << "Cannot reopen file";
-        std::exit(1);
-    }
-	/*
-    //remove header
-    getline(fin, header);
     
+	fin.clear();
+   
+   */
+	fin.close();
+	fin.open(fname);
+	if(fin.fail()){
+		std::cerr<< "Cant reopen file" <<'\n';
+		std::exit(1);
+	}
+	getline(fin, row);
+    //std::cout << row << '\n';
+	
     while(getline(fin, row)){
+		//std::cout << "row: " << row << '\n';
         //get the amount and category
         int firstSlash = row.find('/');
 		int monthIndex = std::stoi(row.substr(0, firstSlash))-1;
@@ -162,25 +176,33 @@ int main(){
 		}
         //add amount to corresponding monthlySpending indices
 		monthlySpending[catIndex][monthIndex] += amount;
-    }
-
+		//std::cout << amount << " catIndex: " << catIndex << '\n';
+		
+	}
+	
     //loop over monthly totals of all categories to find the maximum total
     double maxMonTotal{};
-    //std::string catM;
+    
     for(int i = 0 ; i < categoriesEnd; ++i){
         for(int j= 0 ; j<12; ++j ){
             double currentSpending = monthlySpending[i][j];
             if(currentSpending > maxMonTotal){
                 maxMonTotal = currentSpending;
-                //catM = categoryList[i];
+                //std::string catM = categoryList[i];
             }
         }
     }
     std::cout << "max monthly total across all categories = "<< maxMonTotal << '\n';
-    
+    //using setw() to add witespace after month
     std::cout << "MONTH" << std::setw(7) << std::right <<std::setw(12) << seekCategory << " " << "TOTAL" << '\n';
+	std::string months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+	for(int i =0;  i< 12; ++i){
+		std::cout << months[i] << std::setw(20) << std::right << monthlySpending[seekIndex][i];
+        std::cout <<std::left <<std::setw(1)<<" ";
+		printBar(monthlySpending[seekIndex][i]);
+		std::cout <<'\n';
+	}	
     
-    */
 	
     return 0;
 }
