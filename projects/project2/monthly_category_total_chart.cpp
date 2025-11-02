@@ -66,6 +66,16 @@ void printBar(int amount){
 	}
 }
 
+//prints the 2d monthlySpending array
+const int NUM_MONTHS = 12; //need to specify num columns when passing in an array
+void print2dArray(double arr2d[][NUM_MONTHS], int& rows){
+	for(int i =0; i<rows; ++i){
+		for(int j= 0;j < NUM_MONTHS; ++j){
+			std::cout << arr2d[i][j] << ", ";
+		}
+		std::cout <<'\n';
+	}
+}
 
 int main(){
     /*
@@ -129,7 +139,7 @@ int main(){
 
     //get the chosen category
     int seekIndex{};
-    std::cout << "Choose a number in [" << 0 << "," << --categoriesEnd << "] ";
+    std::cout << "Choose a number in [" << 0 << "," << categoriesEnd-1<< "] ";
     std::string seekCategory{};
     std::cin >> seekIndex;
     seekCategory =  categoryList[seekIndex];
@@ -155,12 +165,11 @@ int main(){
 		std::cerr<< "Cant reopen file" <<'\n';
 		std::exit(1);
 	}
-	getline(fin, row);
+	getline(fin, header);
     //std::cout << row << '\n';
 	
     while(getline(fin, row)){
 		//std::cout << "row: " << row << '\n';
-        //get the amount and category
         int firstSlash = row.find('/');
 		int monthIndex = std::stoi(row.substr(0, firstSlash))-1;
 		double amount = getAmount(row);
@@ -169,15 +178,17 @@ int main(){
         //locate the corresponding category's index
 		for(int i = 0; i< categoriesEnd; ++i){
 			if(categoryList[i] == category){
-				catIndex= i;
+				//std::cout << "category: " << categoryList[i] << " ; " << category << '\n';
+				monthlySpending[i][monthIndex] += amount;
 				i = categoriesEnd;
 			}
 		}
         //add amount to corresponding monthlySpending indices
-		monthlySpending[catIndex][monthIndex] += amount;
+		//monthlySpending[catIndex][monthIndex] += amount;
+		amount = 0;
 		//std::cout << amount << " catIndex: " << catIndex << '\n';
-		
 	}
+	//print2dArray(monthlySpending, categoriesEnd);
 	
     //loop over monthly totals of all categories to find the maximum total
     double maxMonTotal{};
@@ -191,6 +202,7 @@ int main(){
             }
         }
     }
+	
     std::cout << "max monthly total across all categories = "<< maxMonTotal << '\n';
     //using setw() to add witespace after month
     std::cout << "MONTH" << std::setw(7) << std::right <<std::setw(12) << seekCategory << " " << "TOTAL" << '\n';
@@ -199,7 +211,7 @@ int main(){
 	for(int i =0;  i< 12; ++i){
 		std::cout << months[i] << std::setw(20) << std::right << std::fixed << std::setprecision(2) << monthlySpending[seekIndex][i];
         std::cout <<std::left <<std::setw(1)<<" ";
-		int numAsts = (monthlySpending[seekIndex][i] / maxMonTotal) /  MAX_NUM_ASTS;
+		int numAsts = monthlySpending[seekIndex][i] / maxMonTotal * MAX_NUM_ASTS;
 		printBar(numAsts);
 		std::cout <<'\n';
 	}	
