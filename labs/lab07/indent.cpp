@@ -2,9 +2,11 @@
 Author: Alisherjon Turakulov
 Course: cs 135
 Instructor: Tong Yi
-Assignment: Lab 7A
+Assignment: Lab 7B
 
-reads from cin and prints each line with the leading whitespace removed
+reads from cin and prints the lines with corrected indentation using
+a count of the curly braces.
+
 */
 
 #include <iostream>
@@ -14,6 +16,7 @@ reads from cin and prints each line with the leading whitespace removed
 //function to remove leading ws
 std::string removeLeadingSpaces(std::string line);
 
+int countChar(std::string line, char c);
 
 int main(){
 	std::string line{};
@@ -21,6 +24,7 @@ int main(){
 		std::string unindented = removeLeadingSpaces(line);
 		std::cout << unindented << '\n';
 	}
+	
 	return 0;
 }
 
@@ -38,4 +42,19 @@ std::string removeLeadingSpaces(std::string line){
 	}
 	
 	return unindented;
+}
+
+//return the number of occurences of char in line
+//@param string line; line of code
+//@param char c, char to count
+//@return number of occurences of char in line
+int countChar(std::string line, char c){
+	int count{};
+	for(char& ch: line){
+		if(ch == c){
+			++count;
+		}
+	}
+	
+	return count;
 }
