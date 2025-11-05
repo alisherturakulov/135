@@ -63,7 +63,7 @@ double getPercentAnnualTotal(double catTotal, double annualTotal){
 }
 
 int main(){
-    std::cout << "Enter csv file name: ";
+    std::cout << "Enter csv file name with date, category, cost: ";
     std::string fname;
     std::cin >> fname;
     std::ifstream fin(fname);
@@ -168,44 +168,50 @@ int main(){
     }
 	
     //std::cout << "max monthly total across all categories = "<< maxMonTotal << '\n';
-    //using setw() to add witespace after month
-    std::cout << "MON";
+    //will use ofstream to output into a file
+    std::string outFName{};
+    std::cout << "Enter name of generated csv file: ";
+    std::cin >> outFName;
+    
+    std::ofstream fout;
+    fout.open(outFName);
+
+    if(fout.fail()){
+        std::cerr << outFName << " cannot be opened" << std::endl;
+        std::exit(2);
+    }
+    //output the header into the file
+    fout << "MON,";
 	for(int i =0; i<categoriesEnd; ++i){
-		std::cout<< std::setw(15) << std::right << categoryList[i]; 
+		fout << categoryList[i]  << ','; 
 	}
-	std::cout << std::setw(15) << std::right << "TOTAL\n";
-	const int LINE_LEN = categoriesEnd*15+20;
-	for(int i =0; i< LINE_LEN; ++i){
-		std::cout << '-';
-	}
-	std::cout<<'\n';
+    fout << "TOTAL\n";//newlines at the end of each row in the csv file
+
 	std::string months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-	
+	//write out rows
 	for(int i =0; i < 12; ++i){
-		std::cout << months[i];
+		fout << months[i] << ',';
 		for(int j=0; j<categoriesEnd; ++j){
-			std::cout << std::setw(15) << std::right << std::fixed 
-					  << std::setprecision(2) << monthlySpending[j][i];
+			fout << std::fixed << std::setprecision(2) << monthlySpending[j][i] << ',';
 		}
-		std::cout << std::setw(15) << std::right << std::fixed 
-		          << std::setprecision(2) << monthTotals[i] << '\n';
+		fout << std::fixed << std::setprecision(2) << monthTotals[i] << '\n';
 	}
-	for(int i =0 ; i<LINE_LEN; ++i){
-		std::cout <<'=';
-	}
-	std::cout << "\n   ";
+	
+    //output the annual totals per category
+    fout << ','; //last to rows have an empty first column
 	for(int i =0; i<categoriesEnd; ++i){
-		std::cout << std::setw(15) << std::right << std::fixed 
-		          << std::setprecision(2) << categoryTotals[i];
+		fout << std::fixed << std::setprecision(2) << categoryTotals[i] << ',';
 	}
-	std::cout << std::setw(15) << std::right << std::fixed 
-	          << std::setprecision(2) << annualTotal << '\n';
-	std::cout << "   ";
+	fout << std::fixed << std::setprecision(2) << annualTotal << '\n';
+
+	//output percentage of annual total per category
+    fout << ',';
 	for(int i =0; i< categoriesEnd; ++i){
 		double percentAnnualT = getPercentAnnualTotal(categoryTotals[i], annualTotal);
-		std::cout << std::setw(14) << std::right << std::fixed 
-			      << std::setprecision(2) << percentAnnualT << std::left<< "%";
+		fout << std::fixed << std::setprecision(2) << percentAnnualT << "%" << ',';
 	}
-	std::cout <<'\n';
+	//note empty space in the last column; end of file
+    
+    fout.close();
     return 0;
 }
