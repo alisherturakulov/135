@@ -1,23 +1,17 @@
 /*
 Author: Alisherjon Turakulov
 Course: CS 135
-Instrcutor: Tong Yi
-Assignment: Project2B
+Instructor: Tong Yi
+Assingment: Project2C
 
-Uses same setup from Project2A to record data into a 2d array
-Given a csv file with spending data, reads the file, 
-and records monthly spending for each category into a 2d array
-prints a table with row number of months; each column being a category
-the final rows have total spending for each category
-and the percentage of the annual spending for each category total
-the final columns have total spending for each month
-the total annual spending is at the last row and column
+Uses same setup from 2D, recording the monthly totals for each individiual category;
+overall totals for each month and category, and an annual total in to a 2d array.
+Then outputs the table into a new csv file.
 */
 
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <cstdlib>
 #include <iomanip>
 
 //sorts an array of strings in ascending order, using insertion sort
@@ -69,20 +63,6 @@ double getPercentAnnualTotal(double catTotal, double annualTotal){
 }
 
 int main(){
-    /*
-    //Test for insertionSort; pass
-    std::string arr[] = {"a", "A", "A", "B", "apple","aapplw", "zeta"};
-    insertionSort(arr, 7);
-    for(std::string& str : arr){
-        std::cout << str << " ";
-    }
-    //test for get functions; pass
-    std::string testRow= "01/,null,cat,10.00";
-    std::cout << "Category should be \"cat\": " << getCategory(testRow) <<'\n';
-    std::cout << "Amount should be 10.00: " << getAmount(testRow) << '\n';
-    */
-
-    
     std::cout << "Enter csv file name: ";
     std::string fname;
     std::cin >> fname;
@@ -100,7 +80,6 @@ int main(){
     int categoriesEnd{};
 
     //initial read to store the categories in 
-    
     std::string row{};
     while(getline(fin, row)){
         std::string category = getCategory(row);
@@ -128,18 +107,19 @@ int main(){
     //where each row corresponds to categoryList values
 	double monthlySpending[20][12] = {};
 	
+    
+	/*
     //get ready to reread for each category
-	/*std::cout << "before clear" << fin.fail() <<'\n';
+    std::cout << "before clear" << fin.fail() <<'\n';
     fin.clear();
 	std::cout << "before seekg" << fin.fail() << '\n';
 	int offset{};//for seekg()
     fin.seekg(0, std::ios::beg);
 	std::cout << "after seekg" << fin.fail() << '\n';
 	
-    
 	fin.clear();
-   
    */
+
 	fin.close();
 	fin.open(fname);
 	if(fin.fail()){
@@ -149,11 +129,13 @@ int main(){
 	getline(fin, row);
     //std::cout << row << '\n';
 	
+    //record monthly spending data into corresponding month,category index
     while(getline(fin, row)){
 		//std::cout << "row: " << row << '\n';
-        //get the amount and category
+        
         int firstSlash = row.find('/');
 		int monthIndex = std::stoi(row.substr(0, firstSlash))-1;
+        
 		double amount = getAmount(row);
 		std::string category = getCategory(row);
 		int catIndex = 0;
@@ -227,6 +209,3 @@ int main(){
 	std::cout <<'\n';
     return 0;
 }
-
-
-
