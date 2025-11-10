@@ -10,7 +10,7 @@ reads a image in pmg format, and inverts all the color cells in the image
 ...
 254  - 1
 255 - 0
-formula: 0 + (255 - current pixel color)
+formula: (255 - current pixel color)
 */
 
 #include <iostream>
@@ -88,9 +88,13 @@ void writeImage(int image[MAX_H][MAX_W], int height, int width) {
 	return;
 }
 
-//forward declaration
-//will take image data and invert the color values
-void writeInverted(int image[MAX_H][MAX_W], int height, int width);
+
+//will take a reference to a integer from a 2d array of pixel colors and invert the pixel value
+//@param pixel, reference to the integer value in a 2d array of pixel values
+void invertPixel(int &pixelVal){
+	pixelVal = 255 - pixelVal;
+	return;
+}
 
 int main() {
 
@@ -104,15 +108,16 @@ int main() {
 
 	// Now we can manipulate the image the way we like
 	// for example we copy its contents into a new array
-	int out[MAX_H][MAX_W];
+	//int out[MAX_H][MAX_W]; will directly edit the img 2d array
 
+	//loop through all indices in the img array and invert the color data
 	for(int row = 0; row < h; row++) {
 		for(int col = 0; col < w; col++) {
-			out[row][col] = img[row][col];
+			invertPixel(img[row][col]); //passed by reference
 		}
 	}
 
 	// and save this new image to file "outImage.pgm"
-	writeImage(out, h, w);
+	writeImage(img, h, w);
     return 0;
 }
