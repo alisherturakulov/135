@@ -1,11 +1,12 @@
 /*
-Author: Alisherjon Turakulov
+Author:Alisherjon Turakulov
 Course: CS 135
-Instructor: Tong Yi
-Assignment: Lab 8C
+Incstructor: Tong Yi
+Assingment: Lab 8E
 
-reads in an image file inImage.pgm and records pixel color data into a integer matrix
-draws a white box of dimensions 50% by 50% of the original pictures width and height
+reads the data from inImage.pgm, and writes to outImage.pgm with
+the original image sclaed up 200%
+by doubling the width and height and each pixel 
 */
 
 #include <iostream>
@@ -56,7 +57,7 @@ void readImage(int image[MAX_H][MAX_W], int &height, int &width) {
 
 // Writes a PGM file
 // Need to provide the array data and the image dimensions
-void writeImage(int image[MAX_H][MAX_W], int height, int width) {
+void writeImage(int image[1024][1024], int height, int width) {
 	ofstream ostr;
 	ostr.open("outImage.pgm");
 	if (ostr.fail()) {
@@ -83,7 +84,6 @@ void writeImage(int image[MAX_H][MAX_W], int height, int width) {
 	return;
 }
 
-
 int main() {
 
 	int img[MAX_H][MAX_W];
@@ -96,23 +96,29 @@ int main() {
 
 	// Now we can manipulate the image the way we like
 	// for example we copy its contents into a new array
-	//int out[MAX_H][MAX_W]; will directly edit the img 2d array
+    //const int SCALED_W = 2* w;
+    //const int SCLAED_H = 2* h;
+	int out[1024][1024];
 
-    //calculate the box dimensions and row/col start indices
-    //note: row corresponds to height; col corresponds to width
-    int boxWidth = w/2; 
-    int boxHeight = h/2;
-    int rowStart = h/4 ; // rowSart =  height / 2 - boxHeight /2 
-    int colStart = w/4;
 
-	//loop through the intervals of the width and height of the box to change the pixel colors to white
-	for(int row = rowStart; row < rowStart +boxHeight; row++) {
-		for(int col = colStart; col < colStart+boxWidth; col++) {
-            img[row][col] = 255;
+    
+    //for each row, col pair set the output
+    // row col; row col+1; row+1 col; and row+1 col+1 to the pixel value
+    int outRow =0;
+    int outCol =0;
+	for(int row = 0; row < h; row++) {
+		for(int col = 0; col < w; col++) {
+            outRow = row*2;
+            outCol = col*2;
+			out[outRow][outCol] = img[row][col];
+            out[outRow][outCol+1]  = img[row][col];
+            out[outRow+1][outCol] = img[row][col];
+            out[outRow+1][outCol+1]  = img[row][col];
 		}
 	}
 
 	// and save this new image to file "outImage.pgm"
-	writeImage(img, h, w);
-    return 0;
+    //double the height and width
+	writeImage(out, h*2, w*2);
+
 }
