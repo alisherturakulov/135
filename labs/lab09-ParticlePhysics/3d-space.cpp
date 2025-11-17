@@ -43,8 +43,12 @@ double length(Coord3D *p){
   *@return a pointer to a Coord3D
   */
 Coord3D * fartherFromOrigin(Coord3D *p1, Coord3D *p2){
-	
-	return nullptr;
+	double distanceP1 = length(p1);
+	double distanceP2 = length(p2);
+	if(distanceP1 > distanceP2){
+		return p1;
+	}
+	return p2;
 }
 
 
@@ -59,6 +63,6 @@ int main(){
 	std::cout << "Addres of coord: " << &coord << '\n';
 	std::cout << "Address of coord2: " << &coord2 << '\n';
 	Coord3D *fartherPtr = fartherFromOrigin(&coord, &coord2);
-	std::cout << "Farther coordinate: " << fartherPtr << " should be coord\n";
+	std::cout << "Farther coordinate: " << fartherPtr << " should be &coord\n";
 	return 0;
 }
