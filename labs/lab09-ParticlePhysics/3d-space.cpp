@@ -14,6 +14,11 @@ defines a function fartherFromOrigin which takes pointers to two Coord3D objects
 and returns a pointer to the Coord3D farther from the origin
 
 C
+defines a function move which take pointers to cooridnate objects representing the position and velocity 
+vectors, and time in seconds, and changes the position vector based on distance travelled in that time
+
+D
+defines functions to create and delete Coordinate objects dynamically
 
 */
 
@@ -65,9 +70,25 @@ void move(Coord3D *ppos, Coord3D *pvel, double dt){
 	ppos->z = ppos->z + (*pvel).z*dt;
 }
 
+/**allocate memory and initialize
+  *@params x,y,z double values to initialize the coordinate object
+  *@return pointer to a coordinate object
+  */
+Coord3D* createCoord3D(double x, double y, double z){
+	return nullptr;
+}
+
+/** free memory
+  *@param p, a pointer to a coordinate object
+  */
+void deleteCoord3D(Coord3D *p){
+	
+}
+
 
 
 int main(){
+	/*
 	std::cout << "Tests for A: " << std::endl;
 	Coord3D coord{10, 10, 10};
 	//std::cout << "x " << coord.x << std::endl;
@@ -83,6 +104,24 @@ int main(){
 	std::cout << "Tests for C: " << '\n';
 	move(&coord, &coord2, 7.0);
 	std::cout << "Should be {17, 17, 17}: {" << coord.x << ", " << coord.y << ", " << coord.z << "}\n";
+	*/
+	
+	double x, y, z;
+    std::cout << "Enter position: ";
+    std::cin >> x >> y >> z;
+    Coord3D *ppos = createCoord3D(x,y,z);
+    
+    std::cout << "Enter velocity: ";
+    std::cin >> x >> y >> z;
+    Coord3D *pvel = createCoord3D(x,y,z);
+
+    move(ppos, pvel, 10.0);
+
+    std::cout << "Coordinates after 10 seconds: " 
+         << (*ppos).x << " " << (*ppos).y << " " << (*ppos).z << std::endl;
+
+    deleteCoord3D(ppos); // release memory
+    deleteCoord3D(pvel);
 	
 	return 0;
 }
