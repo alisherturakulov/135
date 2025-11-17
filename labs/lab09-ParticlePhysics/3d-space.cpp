@@ -75,14 +75,15 @@ void move(Coord3D *ppos, Coord3D *pvel, double dt){
   *@return pointer to a coordinate object
   */
 Coord3D* createCoord3D(double x, double y, double z){
-	return nullptr;
+	
+	return new Coord3D{x, y, z};
 }
 
 /** free memory
   *@param p, a pointer to a coordinate object
   */
 void deleteCoord3D(Coord3D *p){
-	
+	delete p;
 }
 
 
