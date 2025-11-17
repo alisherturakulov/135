@@ -2,7 +2,7 @@
 Author: Alisherjon Turakulov
 Course: CS 135
 Instructor: Tong Yi
-Assignment: Lab 9AB
+Assignment: Lab 9ABC
 
 A
 Given a pointer to a Coord3D that stores double coordinates x, y, z
@@ -12,6 +12,9 @@ from origin
 B 
 defines a function fartherFromOrigin which takes pointers to two Coord3D objects
 and returns a pointer to the Coord3D farther from the origin
+
+C
+
 */
 
 #include <iostream>
@@ -50,6 +53,13 @@ Coord3D * fartherFromOrigin(Coord3D *p1, Coord3D *p2){
 	}
 	return p2;
 }
+/**Changes the position coordinates of the coordinate by velocity coordinates
+  *@param ppos, pvel, pointer to the position and velocity coordinates
+  *@param dt, double value representing time in seconds 
+  */
+void move(Coord3D *ppos, Coord3D *pvel, double dt){
+	
+}
 
 
 
@@ -58,11 +68,17 @@ int main(){
 	Coord3D coord{10, 10, 10};
 	//std::cout << "x " << coord.x << std::endl;
 	std::cout << "should be  between 17 and 18: " << length(&coord) << std::endl; //pass address of coord
+	
 	std::cout <<"Tests for B: " << std::endl;
 	Coord3D coord2{1, 1, 1};
 	std::cout << "Addres of coord: " << &coord << '\n';
 	std::cout << "Address of coord2: " << &coord2 << '\n';
 	Coord3D *fartherPtr = fartherFromOrigin(&coord, &coord2);
 	std::cout << "Farther coordinate: " << fartherPtr << " should be &coord\n";
+	
+	std::cout << "Tests for C: " << '\n';
+	move(coord, coord2, 7.0);
+	std::cout << "Should be {12, 12, 12}: {" << coord.x << ", " << coord.y << ", " << coord.z << "}\n";
+	
 	return 0;
 }
