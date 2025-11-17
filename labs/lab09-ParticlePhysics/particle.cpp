@@ -106,19 +106,24 @@ void move(Particle *p, double dt){
 // delete all memory allocated for the particle passed by pointer
 void deleteParticle(Particle *p){
 	delete p;
-	p=nullptr;
+	//p=nullptr;
+	//std::cout <<  p << std::endl; 
+	//need to set p in caller scope to nullptr
 }
 
 
 int main() {//using example from lab9 page
     // make new particle
     Particle *p = createParticle(1.0, 1.5, 2.0, 0.1, 0.2, 0.3);
+	/*
 	std::cout << "should be 1: " << getPosition(p).x << std::endl;
 	setVelocity(p, 1.0, 1.0, 1.0);
 	std::cout << "should be 1: " << p->velCoord.x << std::endl;
 	deleteParticle(p);
+	p=nullptr;
 	std::cout << p;
-    /*double time = 0.0;
+	*/
+    double time = 0.0;
     double dt = 0.1;
     while(time < 3.0) {
         // update its velocity
@@ -137,6 +142,6 @@ int main() {//using example from lab9 page
     }
     // remove the particle, deallocating its memory
     deleteParticle(p);
-	*/
+	
 	return 0;
 }
