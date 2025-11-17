@@ -70,6 +70,7 @@ Coord3D* createCoord3D(double x, double y, double z){
   */
 void deleteCoord3D(Coord3D *p){
 	delete p;
+	p=nullptr;
 }
 class Particle{
 	public:
@@ -92,26 +93,31 @@ Particle* createParticle(double x, double y, double z,
 						 
 // set its velocity to (vx, vy, vz)
 void setVelocity(Particle *p, double vx, double vy, double vz){
-	
+	p->velCoord = {vx, vy, vz};
 }
 // get its current position
 Coord3D getPosition(Particle *p){
-	return Coord3D{};
+	return p->posCoord;
 }
 // update particle's position after elapsed time dt
 void move(Particle *p, double dt){
-	
+	move(&(p->posCoord), &(p->velCoord), dt);//uses move method from 3d-space.cpp
 }
 // delete all memory allocated for the particle passed by pointer
 void deleteParticle(Particle *p){
-	
+	delete p;
+	p=nullptr;
 }
 
 
 int main() {//using example from lab9 page
     // make new particle
     Particle *p = createParticle(1.0, 1.5, 2.0, 0.1, 0.2, 0.3);
-	std::cout << p->posCoord.x << std::endl;
+	std::cout << "should be 1: " << getPosition(p).x << std::endl;
+	setVelocity(p, 1.0, 1.0, 1.0);
+	std::cout << "should be 1: " << p->velCoord.x << std::endl;
+	deleteParticle(p);
+	std::cout << p;
     /*double time = 0.0;
     double dt = 0.1;
     while(time < 3.0) {
