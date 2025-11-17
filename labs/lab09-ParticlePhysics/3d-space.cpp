@@ -17,7 +17,7 @@ C
 defines a function move which take pointers to cooridnate objects representing the position and velocity 
 vectors, and time in seconds, and changes the position vector based on distance travelled in that time
 
-D
+E
 defines functions to create and delete Coordinate objects dynamically
 
 */
