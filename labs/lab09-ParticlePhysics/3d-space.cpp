@@ -2,11 +2,16 @@
 Author: Alisherjon Turakulov
 Course: CS 135
 Instructor: Tong Yi
-Assignment: Lab 9A
+Assignment: Lab 9AB
 
+A
 Given a pointer to a Coord3D that stores double coordinates x, y, z
 defines a function length, which returns the euclidean distance
 from origin 
+
+B 
+defines a function fartherFromOrigin which takes pointers to two Coord3D objects
+and returns a pointer to the Coord3D farther from the origin
 */
 
 #include <iostream>
@@ -33,11 +38,27 @@ double length(Coord3D *p){
 	double distxyz = std::sqrt(x*x + y*y + z*z);
 	return distxyz;
 }
+/** Returns the pointer to the larger of two Coord3D objects
+  *@params  p1, and p2, both pointers to a Coord3D
+  *@return a pointer to a Coord3D
+  */
+Coord3D * fartherFromOrigin(Coord3D *p1, Coord3D *p2){
+	
+	return nullptr;
+}
+
 
 
 int main(){
+	std::cout << "Tests for A: " << std::endl;
 	Coord3D coord{10, 10, 10};
 	//std::cout << "x " << coord.x << std::endl;
 	std::cout << "should be  between 17 and 18: " << length(&coord) << std::endl; //pass address of coord
+	std::cout <<"Tests for B: " << std::endl;
+	Coord3D coord2{1, 1, 1};
+	std::cout << "Addres of coord: " << &coord << '\n';
+	std::cout << "Address of coord2: " << &coord2 << '\n';
+	Coord3D *fartherPtr = fartherFromOrigin(&coord, &coord2);
+	std::cout << "Farther coordinate: " << fartherPtr << " should be coord\n";
 	return 0;
 }
