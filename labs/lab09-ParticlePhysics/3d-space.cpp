@@ -58,7 +58,11 @@ Coord3D * fartherFromOrigin(Coord3D *p1, Coord3D *p2){
   *@param dt, double value representing time in seconds 
   */
 void move(Coord3D *ppos, Coord3D *pvel, double dt){
-	
+	//change each coordinate by velocity
+	//pos = pos + velocity*time
+	ppos->x = ppos->x + pvel->x*dt;
+	ppos->y = ppos->y + pvel->y*dt;
+	ppos->z = ppos->z + (*pvel).z*dt;
 }
 
 
@@ -73,12 +77,12 @@ int main(){
 	Coord3D coord2{1, 1, 1};
 	std::cout << "Addres of coord: " << &coord << '\n';
 	std::cout << "Address of coord2: " << &coord2 << '\n';
-	Coord3D *fartherPtr = fartherFromOrigin(&coord, &coord2);
-	std::cout << "Farther coordinate: " << fartherPtr << " should be &coord\n";
+	Coord3D *fartherPtr = fartherFromOrigin(&coord, &coord2);//passing with address of 
+	std::cout << "Farther coordinate: " << fartherPtr << " should be " << &coord << '\n';
 	
 	std::cout << "Tests for C: " << '\n';
-	move(coord, coord2, 7.0);
-	std::cout << "Should be {12, 12, 12}: {" << coord.x << ", " << coord.y << ", " << coord.z << "}\n";
+	move(&coord, &coord2, 7.0);
+	std::cout << "Should be {17, 17, 17}: {" << coord.x << ", " << coord.y << ", " << coord.z << "}\n";
 	
 	return 0;
 }
