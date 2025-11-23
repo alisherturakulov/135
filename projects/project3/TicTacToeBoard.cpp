@@ -14,10 +14,7 @@ implements the constructor and half the member methods of TicTacToeBoard
 TicTacToeBoard::TicTacToeBoard() {
 	for(int i =0; i<3; ++i){
 		// intiialize each row with 3 spaces
-		std::vector<char> row(3);
-		for(int j=0;j<3; ++j){
-			row[j] = ' ';
-		}
+		std::vector<char> row(3, ' ');
 		board.push_back(row);
 		
 	}
@@ -30,9 +27,9 @@ TicTacToeBoard::TicTacToeBoard(int givenSize) {
 		givenSize = 3;
 	}
 		for(int i =0 ;i<givenSize;++i){
-		std::vector<char> row(' ', givenSize);
-		//this has type TicTacToeBoard*
-		this->board.push_back(row);
+			std::vector<char> row(givenSize, ' ');
+			//this has type TicTacToeBoard*
+			this->board.push_back(row);
 		}
 	
 }
@@ -113,19 +110,21 @@ std::string TicTacToeBoard::to_string() const {
 	std::string ret_str = "     0";
 	for(int i =1; i< board.size(); i++){
 		ret_str += "   ";
-		ret_str += i;
+		ret_str += std::to_string(i);
 	}
 	ret_str += "  ";
-	ret_str += '\n';
+	ret_str += "\n";
 	ret_str += drawLine(board.size());
 	for(int i =0 ; i<board.size(); ++i){
 		ret_str += " ";
-		ret_str += i;
+		//need to convert integer to string before concatenating
+		ret_str += std::to_string(i);
 		ret_str += " ";
 		for(int j =0; j < board.size(); ++j){
 			ret_str += "|";
 			ret_str += " ";
-			ret_str += board[i][j];
+			char value = board[i][j];
+			ret_str += value;
 			ret_str += " ";
 		}
 		ret_str +=  "|\n";
