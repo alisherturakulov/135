@@ -4,7 +4,7 @@ Course: CS 135
 Instructor: Tong Yi
 Assignment: Project 3A
 
-implements the constructor and member methods of TicTacToeBoard
+implements the constructor and half the member methods of TicTacToeBoard
 */
 //include class declaration
 #include "TicTacToeBoard.hpp"
@@ -92,7 +92,9 @@ int TicTacToeBoard::size() const {
 //Note that before we can use board[row][col],
 //need to make sure that row and col indices are valid.
 void TicTacToeBoard::mark(int row, int col, char symbol) {
-    
+    if(row > 0 && row < board.size() && col > 0 && col < board.size()){
+		board[row][col] = symbol;
+	}
 }
 
 //TODO: Return a string representation of the contents of board.
@@ -103,6 +105,12 @@ void TicTacToeBoard::mark(int row, int col, char symbol) {
 //    For example, one row with values 'X', ' ', and 'O' looks like
 //    | X |  | O |
 std::string TicTacToeBoard::to_string() const {
+	for(int i =0 ; i<board.size(); ++i){
+		for(int j =0; j < board.size(); ++j){
+			std::cout << "|" << board[i][j];
+		}
+		std::cout << "|\n";
+	}
    return ""; //TODO: placeholder
 }
 
