@@ -22,6 +22,14 @@ TicTacToeBoard::TicTacToeBoard() {
 //TODO: If givenSize is less than 3, create a 3x3 board.
 //Otherwise, initialize the board with the given size for both rows and columns.
 TicTacToeBoard::TicTacToeBoard(int givenSize) {
+	if(givenSize < 3){
+		givenSize = 3;
+	}
+	for(int i =0 ; i< givenSize; ++i){
+		std::vector<char> row(' ', givenSize);
+		//this has type TicTacToeBoard*
+		this->board.push_back(row);
+	}
 	
 }
 
@@ -67,7 +75,7 @@ bool TicTacToeBoard::isValidCol(int col) const {
 //Finish first!!
 //TODO: Return the number of rows of board  
 int TicTacToeBoard::size() const {
-    return 3; //TODO: placeholder, we may have 4x4, 5x5, ... board
+    return board.size(); //TODO: placeholder, we may have 4x4, 5x5, ... board
 }
 
 //TODO: IF row and col are valid indices, 
