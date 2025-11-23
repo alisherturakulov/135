@@ -1,15 +1,28 @@
+/*
+Author: Alisherjon Turakulov
+Course: CS 135
+Instructor: Tong Yi
+Assignment: Project 3A
+
+implements the constructor and member methods of TicTacToeBoard
+*/
+//include class declaration
 #include "TicTacToeBoard.hpp"
 
 //Do not forget TicTacToeBoard:: before constructors and methods of TicTacToeBoard class
 //TODO: default constructor creates a 3x3 board 
 TicTacToeBoard::TicTacToeBoard() {
-
+	for(int i =0; i<3; ++i){
+		// intiialize each row with 3 spaces
+		std::vector<char> row(' ', 3);
+		board.push_back(row);
+	}
 }
 
 //TODO: If givenSize is less than 3, create a 3x3 board.
 //Otherwise, initialize the board with the given size for both rows and columns.
 TicTacToeBoard::TicTacToeBoard(int givenSize) {
-
+	
 }
 
 //TODO: set each cell of the board to be a space character.
