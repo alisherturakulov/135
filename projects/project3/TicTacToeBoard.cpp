@@ -14,8 +14,12 @@ implements the constructor and half the member methods of TicTacToeBoard
 TicTacToeBoard::TicTacToeBoard() {
 	for(int i =0; i<3; ++i){
 		// intiialize each row with 3 spaces
-		std::vector<char> row(' ', 3);
+		std::vector<char> row(3);
+		for(int j=0;j<3; ++j){
+			row[j] = ' ';
+		}
 		board.push_back(row);
+		
 	}
 }
 
@@ -25,11 +29,11 @@ TicTacToeBoard::TicTacToeBoard(int givenSize) {
 	if(givenSize < 3){
 		givenSize = 3;
 	}
-	for(int i =0 ; i< givenSize; ++i){
+		for(int i =0 ;i<givenSize;++i){
 		std::vector<char> row(' ', givenSize);
 		//this has type TicTacToeBoard*
 		this->board.push_back(row);
-	}
+		}
 	
 }
 
@@ -53,7 +57,7 @@ void TicTacToeBoard::clear() {
 //Warning: a function with non-void return type
 //needs to return a value of that return type in every execution path.
 char TicTacToeBoard::getValue(int row, int col) const {
-	if(row < 0 || row > board.size() || col <0 || col > board.size()){
+	if(row < 0 || row >= board.size() || col <0 || col >= board.size()){
 		return 'W';
 	}
     return board[row][col]; 
@@ -92,7 +96,7 @@ int TicTacToeBoard::size() const {
 //Note that before we can use board[row][col],
 //need to make sure that row and col indices are valid.
 void TicTacToeBoard::mark(int row, int col, char symbol) {
-    if(row > 0 && row < board.size() && col > 0 && col < board.size()){
+    if(row >= 0 && row < board.size() && col >= 0 && col < board.size()){
 		board[row][col] = symbol;
 	}
 }
@@ -104,16 +108,41 @@ void TicTacToeBoard::mark(int row, int col, char symbol) {
 //    separated by ONLY ONE vertical bar pipe character '|'.
 //    For example, one row with values 'X', ' ', and 'O' looks like
 //    | X |  | O |
+std::string drawLine(int size);
 std::string TicTacToeBoard::to_string() const {
-	std::string ret_str = "";
+	std::string ret_str = "     0";
+	for(int i =1; i< board.size(); i++){
+		ret_str += "   ";
+		ret_str += i;
+	}
+	ret_str += "  ";
+	ret_str += '\n';
+	ret_str += drawLine(board.size());
 	for(int i =0 ; i<board.size(); ++i){
+		ret_str += " ";
+		ret_str += i;
+		ret_str += " ";
 		for(int j =0; j < board.size(); ++j){
 			ret_str += "|";
+			ret_str += " ";
 			ret_str += board[i][j];
+			ret_str += " ";
 		}
-			ret_str +=  "|\n";
+		ret_str +=  "|\n";
+		ret_str += drawLine(board.size());
 	}
+	
    return ret_str; //TODO: placeholder
+}
+
+std::string drawLine(int size){
+	std::string str = "   +";
+	for(int i= 0;i<size; ++i){
+		str += "---+";
+	}
+	str += "\n";
+	
+	return str;
 }
 
 //TODO: If every single row, column, main diagonal, AND anti-diagonal 
