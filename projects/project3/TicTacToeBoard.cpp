@@ -105,13 +105,15 @@ void TicTacToeBoard::mark(int row, int col, char symbol) {
 //    For example, one row with values 'X', ' ', and 'O' looks like
 //    | X |  | O |
 std::string TicTacToeBoard::to_string() const {
+	std::string ret_str = "";
 	for(int i =0 ; i<board.size(); ++i){
 		for(int j =0; j < board.size(); ++j){
-			std::cout << "|" << board[i][j];
+			ret_str += "|";
+			ret_str += board[i][j];
 		}
-		std::cout << "|\n";
+			ret_str +=  "|\n";
 	}
-   return ""; //TODO: placeholder
+   return ret_str; //TODO: placeholder
 }
 
 //TODO: If every single row, column, main diagonal, AND anti-diagonal 
