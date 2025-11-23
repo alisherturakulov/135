@@ -39,7 +39,12 @@ TicTacToeBoard::TicTacToeBoard(int givenSize) {
 //(2) That is, board.clear() removes all elements of board and make board an empty vector.
 //(3) Our clear method does not change the structure of board -- its number of rows and number of columns will still keep the same -- just set each element to be a space.
 void TicTacToeBoard::clear() {
-
+	//for each loop using references to the row vectors so we can edit their values
+	for(int i = 0; i<board.size(); ++i){
+		for(int j=0;j<board.size(); ++j){
+			board[i][j] = ' ';
+		}
+	}
 }
 
 //TODO: if row and col are valid indices,
@@ -48,7 +53,10 @@ void TicTacToeBoard::clear() {
 //Warning: a function with non-void return type
 //needs to return a value of that return type in every execution path.
 char TicTacToeBoard::getValue(int row, int col) const {
-    return ' '; //TODO: placeholder
+	if(row < 0 || row > board.size() || col <0 || col > board.size()){
+		return 'W';
+	}
+    return board[row][col]; 
 }
 
 //TODO: Checks if the cell at (row, col) is available or not.
