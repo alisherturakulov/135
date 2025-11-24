@@ -18,11 +18,15 @@ public:
     int m;
 };
 
+//@param time, a Time object
 int minutesSinceMidnight(Time time){
-    return 0;
+    int minutes = time.h*60 + time.m;
+    return minutes;
 }
+//@params earlier later, Time objects
 int minutesUntil(Time earlier, Time later){
-    return 0;
+    int minutes = (later.h - earlier.h)*60 + (later.m - earlier.m);
+    return minutes;
 }
 
 int main(){
