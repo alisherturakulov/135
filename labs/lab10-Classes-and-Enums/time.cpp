@@ -2,11 +2,11 @@
 Author: Alisherjon Turakulov
 Course: CS 135
 Instructor: Tong Yi
-Assignment: Lab 10A
+Assignment: Lab 10B
 
-implements functions which take Time
-objects and return the minutes since midnight
-and minutes between them respectively 
+building on 10A
+implements functions to add minutes to a time object
+
 */
 
 #include <iostream>
@@ -29,9 +29,15 @@ int minutesUntil(Time earlier, Time later){
     return minutes;
 }
 
+
+Time addMinutes(Time time0, int min){
+
+    return time0;
+}
+
 int main(){
     int h{}, m{};
-    std::cout << "Enter first time: ";
+    /*std::cout << "Enter first time: ";
     std::cin >> h >> m;
     Time first{h, m};
     std::cout << "Enter second time: ";
@@ -44,5 +50,11 @@ int main(){
     std::cout << '\n';
     std::cout << "These moments of time are " << X << " and " << Y << " minutes after midnight.\n";
     std::cout << "The interval between them is " << Z << " minutes.\n";
+    */
+    std::cout <<"Enter minutes to add";
+    int m2add{};
+    std::cin >> m2add;
+
+    std::cout << "new minutes to first: " << minutesSinceMidnight(addMinutes(first, m2add));
     return 0;
 }
