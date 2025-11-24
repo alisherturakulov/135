@@ -31,16 +31,20 @@ int minutesUntil(Time earlier, Time later){
 
 
 Time addMinutes(Time time0, int min){
-
-    return time0;
+    int m = min % 60;
+    int h = min / 60;
+    
+   
+    Time added = {(time0.h + h), (time0.m + m) };
+    return added;
 }
 
 int main(){
     int h{}, m{};
-    /*std::cout << "Enter first time: ";
+    std::cout << "Enter first time: ";
     std::cin >> h >> m;
     Time first{h, m};
-    std::cout << "Enter second time: ";
+    /*std::cout << "Enter second time: ";
     std::cin >> h >> m;
     Time second{h, m};
     //call functions to find necessary minutes
@@ -51,10 +55,10 @@ int main(){
     std::cout << "These moments of time are " << X << " and " << Y << " minutes after midnight.\n";
     std::cout << "The interval between them is " << Z << " minutes.\n";
     */
-    std::cout <<"Enter minutes to add";
+    std::cout <<"Enter minutes to add: ";
     int m2add{};
     std::cin >> m2add;
 
-    std::cout << "new minutes to first: " << minutesSinceMidnight(addMinutes(first, m2add));
+    std::cout << "new minutes to first: " << minutesSinceMidnight(addMinutes(first, m2add)) << std::endl;
     return 0;
 }
