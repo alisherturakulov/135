@@ -6,6 +6,7 @@ Assignment: lab11C
 
 Impements a Network class storing an array of Profiles and 
 providing methods to lookup and add profiles
+as well as methods adding following functionality among network members
 */
 
 #include <iostream>
@@ -104,12 +105,25 @@ bool Network::addUser(string usrn, string dspn){
 }
 
 bool Network::follow(string usrn1, string usrn2){
-	
+	int id1 = findID(usrn1);
+	int id2 = findID(usrn2);
+	if(id1 != -1 && id2 != -1){
+		return following[id1][id2] = true;
+	}
+	return false;
 }
 
 void Network::printDot(){
 	for(int i{}; i<numUsers; ++i){
-		cout << "@";
+		cout << "\"@" << profiles[i].getUsername() << "\"\n";
+	}
+	
+	for(int i{}; i<numUsers; ++i){
+		for(int j{}; j<numUsers; ++j){
+			if(following[i][j]){
+				std::cout << "\"@" << profiles[i].getUsername() << "\" -> \"@" << profiles[j].getUsername() << "\"\n";
+			}
+		}
 	}
 }
 
