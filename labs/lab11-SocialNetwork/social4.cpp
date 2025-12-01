@@ -13,6 +13,7 @@ adds posting funcitonality with a Post struct member and methods.
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <cmath>
 
 using namespace std;
 
@@ -42,7 +43,7 @@ string Profile::getUsername(){
 string Profile::getFullName(){
 	string fullName = "";
 	fullName += displayname;
-	fullName += "(@" + username + ")";
+	fullName += " (@" + username + ")";
 	return fullName;
 }
 
@@ -88,7 +89,7 @@ public:
  
   // Add a new post
  bool writePost(string usrn, string msg);
- // Print user's "timeline"
+ // Print user's "timeline"; posts by them or people they follow
  bool printTimeline(string usrn);
 };
 
@@ -146,11 +147,32 @@ void Network::printDot(){
 }
 
 bool Network::writePost(string usrn, string msg){
+	if(numPosts < MAX_POSTS){
+		Post nPost{usrn, msg};
+		posts[numPosts] = nPost;
+		numPosts++;
+		return true;
+	}
 	return false;
 }
 
 bool Network::printTimeline(string usrn){
-	return false;
+	bool hasPosts{};
+	for(int i{min(numPosts, MAX_POSTS-1)}; i >= 0; --i){
+		string postUser = posts[i].username;
+		if(postUser == usrn){
+			int id = findID(usrn);
+			if(id != -1){
+				hasPosts= true;
+				std::cout << profiles[id].getFullName() << ": " << posts[i].message << '\n';
+			}
+			
+		}else if(findID(usrn) != -1 && findID(postUser != -1 && following[usrn][postUser]){
+			hasPosts = true;
+			std::cout << profiles[findID(postUser)].getFullName() << ": " << posts[i].message << '\n';
+		}
+	}
+	return hasPosts;
 }
 
 
