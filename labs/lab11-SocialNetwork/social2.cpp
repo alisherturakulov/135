@@ -10,6 +10,7 @@ providing methods to lookup and add profiles
 
 #include <iostream>
 #include <string>
+#include <cctype>
 
 using namespace std;
 
@@ -79,11 +80,19 @@ int Network::findID(string usrn){
 }
 
 bool Network::addUser(string usrn, string dspn){
-	return false;
-/* 	if(usrn){
-		
+	if(numUsers == MAX_USERS || usrn == "" || findID(usrn) != -1){
+		return false;
 	}
- */}
+	for(char& ch : usrn){
+		if(!isalnum(ch)){
+			return false;
+		}
+	}
+	Profile nUser(usrn, dspn);
+	profiles[numUsers] = nUser;
+	++numUsers;
+	return true;
+}
 
 
 int main(){
