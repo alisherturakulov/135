@@ -160,16 +160,16 @@ bool Network::printTimeline(string usrn){
 	bool hasPosts{};
 	for(int i{min(numPosts, MAX_POSTS-1)}; i >= 0; --i){
 		string postUser = posts[i].username;
+		int idUser = findID(usrn);
+		int idPost = findID(postUser);
 		if(postUser == usrn){
-			int id = findID(usrn);
-			if(id != -1){
+			if(idUser != -1){
 				hasPosts= true;
-				std::cout << profiles[id].getFullName() << ": " << posts[i].message << '\n';
+				std::cout << profiles[idUser].getFullName() << ": " << posts[i].message << '\n';
 			}
-			
-		}else if(findID(usrn) != -1 && findID(postUser != -1 && following[usrn][postUser]){
+		}else if( idUser != -1 && idPost != -1 && following[idUser][idPost]){
 			hasPosts = true;
-			std::cout << profiles[findID(postUser)].getFullName() << ": " << posts[i].message << '\n';
+			std::cout << profiles[idPost].getFullName() << ": " << posts[i].message << '\n';
 		}
 	}
 	return hasPosts;
