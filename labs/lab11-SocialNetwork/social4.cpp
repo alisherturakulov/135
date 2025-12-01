@@ -2,12 +2,12 @@
 Author: Alisherjon Turakulov
 Course: CS 135
 Instructor: Tong Yi
-Assignment: lab11C
+Assignment: lab11D
 
 Impements a Network class storing an array of Profiles and 
 providing methods to lookup and add profiles
 as well as methods adding following functionality among network members
-
+adds posting funcitonality with a Post struct member and methods.
 */
 
 #include <iostream>
@@ -50,6 +50,12 @@ void Profile::setDisplayName(string dspn){
 	displayname = dspn;
 }
 
+
+struct Post{
+  string username;
+  string message;
+};
+
 class Network {
 private:
   static const int MAX_USERS = 20; // max number of user profiles
@@ -62,6 +68,10 @@ private:
   // Returns user ID (index in the 'profiles' array) by their username
   // (or -1 if username is not found)
   int findID (string usrn);
+  
+   static const int MAX_POSTS = 100;
+   int numPosts;                    // number of posts
+   Post posts[MAX_POSTS];           // array of all posts
  
 public:
   // Constructor, makes an empty network (numUsers = 0)
@@ -75,11 +85,16 @@ public:
 
  // Print Dot file (graphical representation of the network)
  void printDot();
+ 
+  // Add a new post
+ bool writePost(string usrn, string msg);
+ // Print user's "timeline"
+ bool printTimeline(string usrn);
 };
 
 //implementations for network
 
-Network::Network(): numUsers{}, following{}{}//list-initialize
+Network::Network(): numUsers{}, following{}, numPosts{}{}//list-initialize
 
 int Network::findID(string usrn){
 	for(int i{}; i<numUsers; ++i){
@@ -130,33 +145,45 @@ void Network::printDot(){
 	std::cout << "}\n";
 }
 
+bool Network::writePost(string usrn, string msg){
+	return false;
+}
+
+bool Network::printTimeline(string usrn){
+	return false;
+}
+
+
 int main(){
-	 Network nw;
-    // add three users
-    nw.addUser("mario", "Mario");
-    nw.addUser("luigi", "Luigi");
-    nw.addUser("yoshi", "Yoshi");
+	Network nw;
+  // add three users
+  nw.addUser("mario", "Mario");
+  nw.addUser("luigi", "Luigi");
+  nw.addUser("yoshi", "Yoshi");
+   
+  nw.follow("mario", "luigi");
+  nw.follow("luigi", "mario");
+  nw.follow("luigi", "yoshi");
+  nw.follow("yoshi", "mario");
 
-    // make them follow each other
-    nw.follow("mario", "luigi");
-    nw.follow("mario", "yoshi");
-    nw.follow("luigi", "mario");
-    nw.follow("luigi", "yoshi");
-    nw.follow("yoshi", "mario");
-    nw.follow("yoshi", "luigi");
+  // write some posts
+  nw.writePost("mario", "It's a-me, Mario!");
+  nw.writePost("luigi", "Hey hey!");
+  nw.writePost("mario", "Hi Luigi!");
+  nw.writePost("yoshi", "Test 1");
+  nw.writePost("yoshi", "Test 2");
+  nw.writePost("luigi", "I just hope this crazy plan of yours works!");
+  nw.writePost("mario", "My crazy plans always work!");
+  nw.writePost("yoshi", "Test 3");
+  nw.writePost("yoshi", "Test 4");
+  nw.writePost("yoshi", "Test 5");
 
-    // add a user who does not follow others
-    nw.addUser("wario", "Wario");
-    
-    // add clone users who follow @mario
-    for(int i = 2; i < 6; i++) {
-        string usrn = "mario" + to_string(i);
-        string dspn = "Mario " + to_string(i);
-        nw.addUser(usrn, dspn);
-        nw.follow(usrn, "mario");
-    }
-    // additionally, make @mario2 follow @luigi
-    nw.follow("mario2", "luigi");
+  cout << endl;
+  cout << "======= Mario's timeline =======" << endl;
+  nw.printTimeline("mario");
+  cout << endl;
 
-    nw.printDot();
+  cout << "======= Yoshi's timeline =======" << endl;
+  nw.printTimeline("yoshi");
+  cout << endl;
 }
