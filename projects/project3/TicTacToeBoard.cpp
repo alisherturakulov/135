@@ -168,40 +168,61 @@ bool TicTacToeBoard::tie() const {
 	int countOa{};
 	const int size = board.size();
 	for(int i{}; i<size; ++i){
+		
+		countXr =0;
+		countOr = 0;
+		countXc = 0;
+		countOc = 0;
 		for(int j{}; j<size; ++j){
 			//going across each row
-			if(board[i][j] == 'X'){
-				countXr++;
-			}else if( board[i][j] == 'O'){
-				countOr++;
+			if(countXr == 0 || countOr == 0){//stop counting once a row is found with both
+				if(board[i][j] == 'X'){
+					countXr++;
+				}else if( board[i][j] == 'O'){
+					countOr++;
+				}
 			}
 			//going down each col
-			if(board[j][i] == 'X'){
-				countXc++;
-			}else if(board[j][i] == 'O'){
-				countOc++;
-			}
-			//checking diagnol '\'
-			if(i == j){
-				if(board[i][j] == 'X'){
-					countXd++;
-				}else if( board[i][j] == 'O'){
-					countOd++;
+			if(countXc ==0 || countOc == 0){
+				if(board[j][i] == 'X'){
+					countXc++;
+				}else if(board[j][i] == 'O'){
+					countOc++;
 				}
 			}
-			//chekcing anti-diagnol '/'
-			if(j == (size-1-i)){
-				if(board[i][j] == 'X'){
-					countXa++;
-				}else if( board[i][j] == 'O'){
-					countOa++;
-				}
+		}
+			if(countXr ==0 || countOr ==0 /* && (countXr+countOr >0) */ ){
+				return false;
 			}
+			if(countXc ==0 || countOc==0 /* && (countXc+countOc >0) */ ){
+				return false;
+			}
+	}
+	//checking diagnol '\\'
+	for(int i =0; i<size; i++){
+	
+		if(board[i][i] == 'X'){
+			countXd++;
+		}else if( board[i][i] == 'O'){
+			countOd++;
+		}
 			
-		}	
+		//chekcing anti-diagnol '//'
+		if(board[i][size-1-i] == 'X'){
+			countXa++;
+		}else if( board[i][size-1-i] == 'O'){
+			countOa++;
+		}
+			
+	}
+	if(countXa==0 ||countOa==0){
+		return false;
+	}
+	if(countXd==0 ||countOd==0){
+		return false;
 	}
 	//check for a tie (all possible configurations contain both symbols
-	return countXr> 0 && countOr >0 && countXc >0 && countOc > 0 && countXd>0 && countOd >0 && countXa>0 && countOa>0;
+	return true;
 	
 }
 
@@ -220,29 +241,51 @@ bool TicTacToeBoard::win(int row, int col) const {
 //the function returns true (win found); otherwise, it returns false.
 //Check whether the player at (row, col) can win that row or not.
 bool TicTacToeBoard::winByRow(int row, int col) const {
-	const char& playerID = board[row][col];
-	
-	for(int i =0; i<board.size(); ++i){
-		if(board[row][i] != playerID){
-			return false;
-		}
+		int countX{};
+	int countO{};
+	const int size = board.size();
+	for(int i =0; i<board.size(); i++){
+		
+		
+			if(board[row][i] == 'X'){
+				countX++;
+			}else if(board[row][i] == 'O'){
+				countO++;
+			}
 	}
-    return true; //TODO: placeholder
+	if(countX == size ){
+			return true;
+		}
+		if(countX == size ){
+			return true;
+		}
+   return false;
 }
-
 //TODO: Check Vertical Win: 
 //Evaluate the column containing the cell (row, col). 
 //If the current player's symbol forms a continuous, 
 //unbroken sequence of the required length within this column, 
 //the function returns true (win found); otherwise, it returns false.
 bool TicTacToeBoard::winByCol(int row, int col) const {
-	
+	int countX{};
+	int countO{};
+	const int size = board.size();
 	for(int i =0; i<board.size(); i++){
-		if(board[i][col] != board[row][col]){
-			return false;
-		}
+		
+		
+			if(board[i][col] == 'X'){
+				countX++;
+			}else if(board[i][col] == 'O'){
+				countO++;
+			}
 	}
-   return true; //TODO: placeholder
+	if(countX == size ){
+			return true;
+		}
+		if(countX == size ){
+			return true;
+		}
+   return false; //TODO: placeholder
 }
 
 //TODO: Check Digonal (including both diagonal and anti-diagonal) Win: 
@@ -260,7 +303,10 @@ bool TicTacToeBoard::winByDiagonal(int row, int col) const {
 	bool wdiagnol{true};
 	bool wanti_diagnol{true};
 	const int size = board.size();
-	if(row == col || row == (size-1-col)){//check that cell is in a diagnol
+	if(board[row][col] == ' '){
+		return false;
+	}
+	if(row == col || col == (size-1-row)){//check that cell is in a diagnol
 		const char& playerSymbol = board[row][col];
 		for(int i{}; i<size; ++i){
 			if(board[i][i] != playerSymbol){
@@ -270,7 +316,12 @@ bool TicTacToeBoard::winByDiagonal(int row, int col) const {
 				wanti_diagnol = false;
 			}
 		}
-		return wdiagnol || wanti_diagnol;
+		if(row == col){
+			return wdiagnol;
+		}
+		if(col == size-1-row){
+			return wanti_diagnol;
+		}
 	}
 	
    return false; //TODO: placeholder

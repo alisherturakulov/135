@@ -17,7 +17,7 @@ struct Point{
 };
 
 //Takes two Point Objects and returns the double distance between them
-double distance(Point& A, Point& B){
+double distance(Point A, Point B){
 	//distance = sqrt( (ax - bx)^2 (ay - by)^2 )
 	double dist = std::sqrt(std::pow(A.x - B.x, 2) +std::pow(A.y - B.y, 2));
 	return dist;

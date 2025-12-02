@@ -17,7 +17,7 @@ struct Point{
 };
 
 //Takes two Point Objects and returns the double distance between them
-double distance(Point& A, Point& B){
+double distance(Point A, Point B){
 	//distance = sqrt( (ax - bx)^2 (ay - by)^2 )
 	double dist = std::sqrt(std::pow(A.x - B.x, 2) +std::pow(A.y - B.y, 2));
 	return dist;
@@ -30,7 +30,7 @@ struct Triangle{
 	Point z;
 };
 
-double getPerimiter(Triangle triangle){
+double perimeter(Triangle triangle){
 	double perimiter = distance(triangle.x, triangle.y) + distance(triangle.y, triangle.z) + distance(triangle.x, triangle.z);
 	return perimiter;
 }
@@ -47,8 +47,8 @@ int main(){
 	
 	Triangle triangle{PointA, PointB, PointC};
 	
-	double perimeter = getPerimiter(triangle);
+	double perimet = perimeter(triangle);
 	
-	std::cout << "Perimiter of triangle: " << perimeter << '\n';
+	std::cout << "Perimiter of triangle: " << perimet << '\n';
 	return 0;
 }
