@@ -210,7 +210,7 @@ bool TicTacToeBoard::tie() const {
 //diagonal, or anti-diagonal direction, return true,
 //otherwise, return false.
 bool TicTacToeBoard::win(int row, int col) const {
-    return false; //TODO: placeholder
+    return winByRow(row, col) || winByCol(row, col) || winByDiagonal(row, col); //TODO: placeholder
 }
 
 //TODO: Check Horizontal Win: 
@@ -244,5 +244,21 @@ bool TicTacToeBoard::winByCol(int row, int col) const {
 //unbroken sequence of the required length within this anti-diagonal, 
 //the function returns true (win found); otherwise, return false. 
 bool TicTacToeBoard::winByDiagonal(int row, int col) const {
+	bool wdiagnol{true};
+	bool wanti_diagnol{true};
+	const int size = board.size();
+	if(row == col || row == (size-1-col)){//check that cell is in a diagnol
+		const char& playerSymbol = board[row][col];
+		for(int i{}; i<size; ++i){
+			if(board[i][i] != playerSymbol){
+				wdiagnol = false;
+			}
+			if(board[i][size-1-i] != playerSymbol){
+				wanti_diagnol = false;
+			}
+		}
+		return wdiagnol || wanti_diagnol;
+	}
+	
    return false; //TODO: placeholder
 }
