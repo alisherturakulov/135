@@ -220,7 +220,14 @@ bool TicTacToeBoard::win(int row, int col) const {
 //the function returns true (win found); otherwise, it returns false.
 //Check whether the player at (row, col) can win that row or not.
 bool TicTacToeBoard::winByRow(int row, int col) const {
-    return false; //TODO: placeholder
+	const char& playerID = board[row][col];
+	
+	for(int i =0; i<board.size(); ++i){
+		if(board[row][i] != playerID){
+			return false;
+		}
+	}
+    return true; //TODO: placeholder
 }
 
 //TODO: Check Vertical Win: 
@@ -229,7 +236,13 @@ bool TicTacToeBoard::winByRow(int row, int col) const {
 //unbroken sequence of the required length within this column, 
 //the function returns true (win found); otherwise, it returns false.
 bool TicTacToeBoard::winByCol(int row, int col) const {
-   return false; //TODO: placeholder
+	
+	for(int i =0; i<board.size(); i++){
+		if(board[i][col] != board[row][col]){
+			return false;
+		}
+	}
+   return true; //TODO: placeholder
 }
 
 //TODO: Check Digonal (including both diagonal and anti-diagonal) Win: 
