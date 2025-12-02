@@ -158,7 +158,51 @@ std::string drawLine(int size){ //doesnt need const; non-member helper function
 //Otherwise, if any of those lines (row/col/main diagonal/anti-digonal)
 //is missing an 'X' or an 'O', a win is still possible (return false for tie status).
 bool TicTacToeBoard::tie() const {
-    return false; //TODO: placeholder
+	int countXr{};//looks like a love letter
+	int countOr{};
+	int countXc{};
+	int countOc{};
+	int countXd{};
+	int countOd{};
+	int countXa{};
+	int countOa{};
+	const int size = board.size();
+	for(int i{}; i<size; ++i){
+		for(int j{}; j<size; ++j){
+			//going across each row
+			if(board[i][j] == 'X'){
+				countXr++;
+			}else if( board[i][j] == 'O'){
+				countOr++;
+			}
+			//going down each col
+			if(board[j][i] == 'X'){
+				countXc++;
+			}else if(board[j][i] == 'O'){
+				countOc++;
+			}
+			//checking diagnol '\'
+			if(i == j){
+				if(board[i][j] == 'X'){
+					countXd++;
+				}else if( board[i][j] == 'O'){
+					countOd++;
+				}
+			}
+			//chekcing anti-diagnol '/'
+			if(j == (size-1-i)){
+				if(board[i][j] == 'X'){
+					countXa++;
+				}else if( board[i][j] == 'O'){
+					countOa++;
+				}
+			}
+			
+		}	
+	}
+	//check for a tie (all possible configurations contain both symbols
+	return countXr> 0 && countOr >0 && countXc >0 && countOc > 0 && countXd>0 && countOd >0 && countXa>0 && countOa>0;
+	
 }
 
 //TODO: Check whether the player at row and col wins.
