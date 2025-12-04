@@ -241,7 +241,7 @@ bool TicTacToeBoard::win(int row, int col) const {
 //the function returns true (win found); otherwise, it returns false.
 //Check whether the player at (row, col) can win that row or not.
 bool TicTacToeBoard::winByRow(int row, int col) const {
-		int countX{};
+	int countX{};
 	int countO{};
 	const int size = board.size();
 	for(int i =0; i<board.size(); i++){
@@ -253,13 +253,13 @@ bool TicTacToeBoard::winByRow(int row, int col) const {
 				countO++;
 			}
 	}
-	if(countX == size ){
+/* 	if(countX == size ){
 			return true;
 		}
-		if(countX == size ){
+		if(countX == size ){//typo; I didn't check countO
 			return true;
 		}
-   return false;
+ */   return countX == size || countO == size;
 }
 //TODO: Check Vertical Win: 
 //Evaluate the column containing the cell (row, col). 
@@ -279,13 +279,13 @@ bool TicTacToeBoard::winByCol(int row, int col) const {
 				countO++;
 			}
 	}
-	if(countX == size ){
+/* 	if(countX == size ){
 			return true;
 		}
-		if(countX == size ){
+		if(countX == size ){//same typo; countO needs a check
 			return true;
 		}
-   return false; //TODO: placeholder
+ */   return countX == size || countO == size; //TODO: placeholder
 }
 
 //TODO: Check Digonal (including both diagonal and anti-diagonal) Win: 
@@ -300,29 +300,29 @@ bool TicTacToeBoard::winByCol(int row, int col) const {
 //unbroken sequence of the required length within this anti-diagonal, 
 //the function returns true (win found); otherwise, return false. 
 bool TicTacToeBoard::winByDiagonal(int row, int col) const {
-	bool wdiagnol{true};
-	bool wanti_diagnol{true};
+	bool wdiagonal{true};
+	bool wanti_diagonal{true};
 	const int size = board.size();
-	if(board[row][col] == ' '){
-		return false;
-	}
+	//if(board[row][col] == ' '){
+	//	return false;
+	//}
 	if(row == col || col == (size-1-row)){//check that cell is in a diagnol
 		const char& playerSymbol = board[row][col];
 		for(int i{}; i<size; ++i){
 			if(board[i][i] != playerSymbol){
-				wdiagnol = false;
+				wdiagonal = false;
 			}
 			if(board[i][size-1-i] != playerSymbol){
-				wanti_diagnol = false;
+				wanti_diagonal = false;
 			}
 		}
-		if(row == col){
+/* 		if(row == col){//this is wrong; it short circuits if row,col is the center cell
 			return wdiagnol;
 		}
 		if(col == size-1-row){
 			return wanti_diagnol;
 		}
-	}
+ */	}else{return false;}
 	
-   return false; //TODO: placeholder
+   return wdiagonal || wanti_diagonal; //TODO: placeholder
 }

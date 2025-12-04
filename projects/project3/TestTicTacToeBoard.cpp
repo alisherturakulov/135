@@ -133,11 +133,41 @@ int main(int argc, const char *argv[]) {
             }
             std::cout << std::endl;
         }
+		
 //expected output:
 //,,,,
 //,,,,
 //true,true,true,true,
 //,,,,
+	delete tttBoard ;
+	tttBoard = nullptr;
+	
+	char data2[][NUM_COLUMNS] = {
+		{'X', 'O', 'X', ' ',},
+		{'O', 'O', 'O', 'O',},
+		{' ', 'X', 'O', ' ',},
+		{'X', ' ', ' ', 'X',},
+	};
+	tttBoard = assignData(data2);
+
+        bool result2;
+        for (int row = 0; row < tttBoard->size(); row++) {
+            for (int col = 0; col < tttBoard->size(); col++) {
+                result2 = tttBoard->winByRow(row, col);
+                if (result2) { //result == true
+                   std::cout << std::boolalpha << result2;
+                }
+                std::cout << ',';
+                //std::cout << std::boolalpha << tttBoard->winByRow(row, col) << ',';
+            }
+            std::cout << std::endl;
+        }
+//expected output:
+//,,,,
+//true,true,true,true,
+//,,,,
+//,,,,
+	
     }
     else if (type == 'F') {
         //test winByCol(int row, int col)
@@ -168,6 +198,36 @@ int main(int argc, const char *argv[]) {
 //,true,,,
 //,true,,,
 //,true,,,
+		delete tttBoard;
+		tttBoard = nullptr;
+		
+		char datae2[][NUM_COLUMNS] = {
+			{'O', 'X', 'O', ' '},
+            {'O', 'O', 'O', 'O'},
+            {'O', 'X', 'O', ' '},
+            {'X', 'X', 'O', 'X'},
+		};
+		tttBoard = assignData(datae2);
+		bool result2;
+		for (int row = 0; row < tttBoard->size(); row++) {
+            for (int col = 0; col < tttBoard->size(); col++) {
+                result2 = tttBoard->winByCol(row, col);
+                if (result2) { //result == true
+                   std::cout << std::boolalpha << result2;
+                }
+                std::cout << ',';
+
+                //std::cout << std::boolalpha << tttBoard->winByCol(row, col) << ',';
+            }
+            std::cout << std::endl;
+        }
+//expected output:
+//,,true,,
+//,,true,,
+//,,true,,
+//,,true,,
+		
+		    
     }
     else if (type == 'G') {
         //test winByDiagonal(int row, int col)
