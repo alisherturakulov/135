@@ -23,7 +23,7 @@ TicTacToeGame::TicTacToeGame(): tttBoard(){
 /**non-Default Constructor initializes tttBoard member with custom size
   *@param size, game board size
 */
-TicTacToeGame::TicTacToeGame(int size): tttBoard(size){
+TicTacToeGame::TicTacToeGame(int size): tttBoard(size){//to prevent errors in isGameOver
 	//tttBoard already initialized in decalration
 }
 
@@ -58,7 +58,14 @@ void TicTacToeGame::start(){
 	int debugContinue{};
 	std::cout << tttBoard.to_string();//initial print
 	
-	while(!isGameOver() ||  debugContinue != -1){
+	//round 1
+	std::cout << "User, enter row and col to place X: ";
+	std::cin >> currRow >> currCol;
+	humanPlay();//uses currRow/Col
+	std::cout << tttBoard.to_string();
+	round++;
+	
+	while( !isGameOver() ||  debugContinue != -1){
 		//rounds
 		std::cout << "Round " << round << ": ";
 		if(round % 2 == 1){
@@ -85,7 +92,7 @@ bool TicTacToeGame::isGameOver() const{
 	if(tttBoard.tie()){
 		std::cout << "It is a tie.\n" ;
 		return true;
-	}else if(tttBoard.win()){
+	}else if(tttBoard.win(currRow, currCol)){//the game stops at a win, so 
 		if(tttBoard.getValue(currRow, currCol) == 'X'){//check who won by ID
 			std::cout << "Human Wins. Yay!!!\n";
 		}else{
@@ -98,13 +105,21 @@ bool TicTacToeGame::isGameOver() const{
 }
 
 
-/**ask for user input for the row, col on the board
+/**ask for user input for the row, col on the board, updates currRow/Col
   *
 */
-void TicTacToeGame::humanPlay(){}
+void TicTacToeGame::humanPlay(){
+	//note: if there are no possible turns, this method would not be called; no infinite loop
+	while(!tttBoard.isValidRow(currRow) || !tttBoard.isValidCol(currCol) || !tttBoard.isAvailable(currRow, currCol)){
+		std::cout << "Error: row/col is incorrect; please reenter row and col indices: ";
+		std::cin >> currRow >> currCol;
+	}
+	
+	tttBoard.mark(currRow, currCol, HUMAN_ID);
+}
 
 
-/**make the computer play a turn
+/**make the computer play a turn, updates currRow/Col
   *
 */
 void TicTacToeGame::computerPlay(){}
