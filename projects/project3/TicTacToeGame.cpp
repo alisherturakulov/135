@@ -28,18 +28,35 @@ TicTacToeGame::TicTacToeGame(int size): tttBoard(size){
 }
 
 
-/**
+/**start the game
   *
 */
 void TicTacToeGame::runRepeat(){
+	std::cout << "start runRepeat()\n";
+	//bool start = true;
+	std::string continueInput{};
 	
-	std::cout << "ran runRepeat\n";
+	
+	do{
+/* 		if(start){
+			start = false;
+		}
+ */		start();
+		
+		std::cout << "Do you want to continue (yes/no): ";
+		std::cin >> continueInput;
+	}while(continueInput == "yes" || continueInput.at(0) == 'y');
+	std::cout << "exit runRepeat\n";
 }
 
 
-//Start the game loop
+/**Start a round
+*/
 void TicTacToeGame::start(){
-	
+	while(!isGameOver()){
+		//rounds
+	}
+	return;
 	std::cout << "ran start" << std::endl;
 }
 
@@ -47,17 +64,17 @@ void TicTacToeGame::start(){
   *@return bool whether or not the game is over
 */
 bool TicTacToeGame::isGameOver() const{
-	return false;
+	return true;
 }
 
 
-/**
+/**ask for user input for the row, col on the board
   *
 */
 void TicTacToeGame::humanPlay(){}
 
 
-/**
+/**make the computer play a turn
   *
 */
 void TicTacToeGame::computerPlay(){}
