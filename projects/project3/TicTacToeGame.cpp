@@ -53,11 +53,24 @@ void TicTacToeGame::runRepeat(){
 /**Start a round
 */
 void TicTacToeGame::start(){
-	while(!isGameOver()){
+	int round{1};
+	int debugContinue{};
+	std::cout << tttBoard.to_string();//initial print
+	while(!isGameOver() ||  debugContinue != -1){
 		//rounds
+		std::cout << "Round " << round << ": ";
+		std::cout << "User, enter row and col to place X: ";
+		std::cin >> currRow >> currCol;
+		humanPlay();//uses currRow/Col
+		std::cout << tttBoard.to_string();
+		computerPlay();//updates currRow/Col
+		round++;
+		std::cout << "Round " << round << ": Computer places O at row" << currRow << " and col " << currCol << '.';
+		std::cout << tttBoard.to_string();
+		round++;
+		std::cout << "enter -1 to end";
+		std::cin >> debugContinue;
 	}
-	return;
-	std::cout << "ran start" << std::endl;
 }
 
 /**Check if the game is over
