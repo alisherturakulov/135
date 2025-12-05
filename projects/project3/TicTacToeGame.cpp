@@ -45,29 +45,34 @@ void TicTacToeGame::runRepeat(){
 		
 		std::cout << "Do you want to continue (yes/no): ";
 		std::cin >> continueInput;
+		tttBoard.clear();
 	}while(continueInput == "yes" || continueInput.at(0) == 'y');
 	std::cout << "exit runRepeat\n";
 }
 
 
-/**Start a round
+/**Start a game and stop once its over
 */
 void TicTacToeGame::start(){
 	int round{1};
 	int debugContinue{};
 	std::cout << tttBoard.to_string();//initial print
+	
 	while(!isGameOver() ||  debugContinue != -1){
 		//rounds
 		std::cout << "Round " << round << ": ";
-		std::cout << "User, enter row and col to place X: ";
-		std::cin >> currRow >> currCol;
-		humanPlay();//uses currRow/Col
-		std::cout << tttBoard.to_string();
-		computerPlay();//updates currRow/Col
-		round++;
-		std::cout << "Round " << round << ": Computer places O at row" << currRow << " and col " << currCol << '.';
-		std::cout << tttBoard.to_string();
-		round++;
+		if(round % 2 == 1){
+			std::cout << "User, enter row and col to place X: ";
+			std::cin >> currRow >> currCol;
+			humanPlay();//uses currRow/Col
+			std::cout << tttBoard.to_string();
+			round++;
+		}else{
+			computerPlay();//updates currRow/Col
+			std::cout << "Round " << round << ": Computer places O at row" << currRow << " and col " << currCol << '.';
+			std::cout << tttBoard.to_string();
+			round++;
+		}
 		std::cout << "enter -1 to end";
 		std::cin >> debugContinue;
 	}
@@ -77,7 +82,19 @@ void TicTacToeGame::start(){
   *@return bool whether or not the game is over
 */
 bool TicTacToeGame::isGameOver() const{
-	return true;
+	if(tttBoard.tie()){
+		std::cout << "It is a tie.\n" ;
+		return true;
+	}else if(tttBoard.win()){
+		if(tttBoard.getValue(currRow, currCol) == 'X'){//check who won by ID
+			std::cout << "Human Wins. Yay!!!\n";
+		}else{
+			std::cout << "Computer Wins. Yuck.\n";
+		}
+		return true;
+	}
+	
+	return false;
 }
 
 
