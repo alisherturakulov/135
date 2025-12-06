@@ -55,17 +55,18 @@ void TicTacToeGame::runRepeat(){
 */
 void TicTacToeGame::start(){
 	int round{1};
-	int debugContinue{};
+	//int debugContinue{};
 	std::cout << tttBoard.to_string();//initial print
 	
 	//round 1
+	std::cout << "Round " << round << ": ";
 	std::cout << "User, enter row and col to place X: ";
 	std::cin >> currRow >> currCol;
 	humanPlay();//uses currRow/Col
 	std::cout << tttBoard.to_string();
 	round++;
 	
-	while( !isGameOver() ||  debugContinue != -1){
+	while( !isGameOver() /*||  debugContinue != -1*/){
 		//rounds
 		std::cout << "Round " << round << ": ";
 		if(round % 2 == 1){
@@ -73,16 +74,17 @@ void TicTacToeGame::start(){
 			std::cin >> currRow >> currCol;
 			humanPlay();//uses currRow/Col
 			std::cout << tttBoard.to_string();
-			round++;
+			
 		}else{
 			computerPlay();//updates currRow/Col
-			std::cout << "Round " << round << ": Computer places O at row" << currRow << " and col " << currCol << '.';
+			std::cout << "Round " << round << ": Computer places O at row " << currRow << " and col " << currCol << ".\n";
 			std::cout << tttBoard.to_string();
-			round++;
+			
 		}
-		std::cout << "enter -1 to end";
+		round++;
+/* 		std::cout << "enter -1 to end";
 		std::cin >> debugContinue;
-	}
+ */	}
 }
 
 /**Check if the game is over
@@ -92,10 +94,11 @@ bool TicTacToeGame::isGameOver() const{
 	if(tttBoard.tie()){
 		std::cout << "It is a tie.\n" ;
 		return true;
-	}else if(tttBoard.win(currRow, currCol)){//the game stops at a win, so 
-		if(tttBoard.getValue(currRow, currCol) == 'X'){//check who won by ID
+	}else if(tttBoard.win(currRow, currCol)){//the game stops at a win, so
+		char currSymbol = tttBoard.getValue(currRow, currCol);
+		if(currSymbol == 'X'){//check who won by ID
 			std::cout << "Human Wins. Yay!!!\n";
-		}else{
+		}else if(currSymbol == 'O'){
 			std::cout << "Computer Wins. Yuck.\n";
 		}
 		return true;
@@ -120,6 +123,56 @@ void TicTacToeGame::humanPlay(){
 
 
 /**make the computer play a turn, updates currRow/Col
-  *
+  *Checks for a win, a draw, and otherwise marks the first available cell
 */
-void TicTacToeGame::computerPlay(){}
+void TicTacToeGame::computerPlay(){
+	bool canWin{true};
+	bool canDraw{true};
+	const int SIZE{tttBoard.size()};
+	
+	for(int i{0}; i < SIZE; ++i){
+		for(int j{0}; j< SIZE; ++j){
+			if(tttBoard.isAvailable(i,j)){//only if the cell is empty
+				if(canWin){
+					tttBoard.mark(i, j, COMPUTER_ID);
+					if(tttBoard.win(i, j)){
+						currRow = i;
+						currCol = j;
+						std::cout << "chose first win\n";
+						return;
+					}
+					tttBoard.mark(i, j, ' ');
+					if(i == SIZE-1 && j == SIZE-1){
+						canWin=false;
+						i= -1;//will be 0 after this iteration
+						j= -1;
+					}
+					
+				}else if(canDraw){
+					tttBoard.mark(i, j, HUMAN_ID);
+					if(tttBoard.win(i, j)){
+						tttBoard.mark(i, j, COMPUTER_ID);
+						currRow = i;
+						currCol = j;
+						std::cout << "chose first draw\n";
+						return;
+					}
+					tttBoard.mark(i, j, ' ');//unmark if cell wont draw
+					if(i==SIZE-1 && j == SIZE-1){
+						canDraw = false;
+						i= -1;
+						j= -1;
+					}
+				}else{
+					tttBoard.mark(i, j, COMPUTER_ID);
+					currRow = i;
+					currCol = j;
+					std::cout << "chose first available\n";
+					return;
+				}
+			}else if(i == SIZE-1 && j == SIZE-1){
+				std::cout << "none available\n";
+			}
+		}
+	}
+}

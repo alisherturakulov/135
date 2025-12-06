@@ -323,6 +323,12 @@ bool TicTacToeBoard::winByDiagonal(int row, int col) const {
 			return wanti_diagnol;
 		}
  */	}else{return false;}
+ 
+	if(row!= col){
+		wdiagonal = false;
+	}else if(col != size-1-row){
+		wanti_diagonal = false;
+	}	
 	
    return wdiagonal || wanti_diagonal; //TODO: placeholder
 }
