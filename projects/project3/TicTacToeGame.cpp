@@ -32,7 +32,7 @@ TicTacToeGame::TicTacToeGame(int size): tttBoard(size){//to prevent errors in is
   *
 */
 void TicTacToeGame::runRepeat(){
-	std::cout << "start runRepeat()\n";
+	//std::cout << "start runRepeat()\n";
 	//bool start = true;
 	std::string continueInput{};
 	
@@ -47,7 +47,7 @@ void TicTacToeGame::runRepeat(){
 		std::cin >> continueInput;
 		tttBoard.clear();
 	}while(continueInput == "yes" || continueInput.at(0) == 'y');
-	std::cout << "exit runRepeat\n";
+	//std::cout << "exit runRepeat\n";
 }
 
 
@@ -97,9 +97,9 @@ bool TicTacToeGame::isGameOver() const{
 	}else if(tttBoard.win(currRow, currCol)){//the game stops at a win, so
 		char currSymbol = tttBoard.getValue(currRow, currCol);
 		if(currSymbol == 'X'){//check who won by ID
-			std::cout << "Human Wins. Yay!!!\n";
+			std::cout << "Human wins. Yay!!!\n";
 		}else if(currSymbol == 'O'){
-			std::cout << "Computer Wins. Yuck.\n";
+			std::cout << "Computer wins. Yuck.\n";
 		}
 		return true;
 	}
@@ -138,7 +138,7 @@ void TicTacToeGame::computerPlay(){
 					if(tttBoard.win(i, j)){
 						currRow = i;
 						currCol = j;
-						std::cout << "chose first win\n";
+						//std::cout << "chose first win\n";
 						return;
 					}
 					tttBoard.mark(i, j, ' ');
@@ -154,7 +154,7 @@ void TicTacToeGame::computerPlay(){
 						tttBoard.mark(i, j, COMPUTER_ID);
 						currRow = i;
 						currCol = j;
-						std::cout << "chose first draw\n";
+						//std::cout << "chose first draw\n";
 						return;
 					}
 					tttBoard.mark(i, j, ' ');//unmark if cell wont draw
@@ -167,12 +167,12 @@ void TicTacToeGame::computerPlay(){
 					tttBoard.mark(i, j, COMPUTER_ID);
 					currRow = i;
 					currCol = j;
-					std::cout << "chose first available\n";
+					//std::cout << "chose first available\n";
 					return;
 				}
-			}else if(i == SIZE-1 && j == SIZE-1){
+			}/*else if(i == SIZE-1 && j == SIZE-1){
 				std::cout << "none available\n";
-			}
+			}*/
 		}
 	}
 }
