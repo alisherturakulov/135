@@ -14,7 +14,7 @@ a vector<int> with the positive integers in the same order from the parameter
 
 
 //returns a vector with the positive ints in the same order given a vector
-std::vector<int> goodVibes(const std::vector<int>& v){
+std::vector<int> goodVibes(const std::vector<int> v){
 	std::vector<int> poss;
 	for(int i{}; i<v.size(); ++i){
 		if(v.at(i) >= 0){
