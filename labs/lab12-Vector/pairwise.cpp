@@ -13,7 +13,7 @@ The pair is zero if the parameter lengths differ
 #include <string>
 #include <vector>
 
-std::vector<int> sumPairWise(const std::vector<int> &v1, const std::vector<int> &v2){
+std::vector<int> sumPairWise( std::vector<int> &v1,  std::vector<int> &v2){
 	int min = v1.size();
 	int max = v2.size();
 	
