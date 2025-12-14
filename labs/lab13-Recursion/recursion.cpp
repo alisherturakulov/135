@@ -2,21 +2,26 @@
 Author: Alisherjon Turakulov
 Course: CS 135
 Instructor: Tong Yi
-Assignment: Lab 13ABC
+Assignment: Lab 13ABCD
 
 implements a recursive function to print numbers in a range
 a recrusive function to sum numbers in a range
 a recursive sumArray function
+a recursive isAlphanumeric function
+a recursive nestedParens function
 and tests them all
 */
 
 
 #include <iostream>
 #include <string>
+#include <cctype>
 
 void printRange(int left, int right);
 int sumRange(int left, int right);
 int sumArray(int* arr, int size);
+bool isAlphanumeric(std::string s);
+bool nestedParens(std::string s);
 
 int main(){
 	
@@ -49,6 +54,22 @@ int main(){
 
     delete[] arr;         // deallocate it
 
+	std::string str1 = "&hello1";
+	std::cout << str1 << ": " << isAlphanumeric(str1) << '\n';
+	str1 = "hello1&";
+	std::cout << str1 << ": " << isAlphanumeric(str1) << '\n';
+	str1 = "hello1";
+	std::cout << str1 << ": " << isAlphanumeric(str1) << '\n';
+	
+	std::cout << nestedParens("((()))") << std::endl;      // true (1)
+	std::cout<< nestedParens("()") << std::endl;          // true (1)
+	std::cout << nestedParens("") << std::endl;            // true (1)
+
+	std::cout << nestedParens("(((") << std::endl;         // false (0)
+	std::cout << nestedParens("(()") << std::endl;         // false (0)
+	std::cout << nestedParens(")(") << std::endl;          // false (0)
+	std::cout << nestedParens("a(b)c") << std::endl;       // false (0)
+
 	return 0;
 }
 
@@ -76,4 +97,28 @@ int sumArray(int* arr, int size){
 	return arr[size-1] + sumArray(arr, size-1);
 }
 
+//returns true if all the chars in a string are alphanumeric
+bool isAlphanumeric(std::string s){
+	if(s.length() == 0){
+		return true;
+	}else if(std::isalnum(s.at(s.length()-1))){
+		return isAlphanumeric(s.substr(0, s.length()-1));
+	}
+	return false;
+}
 
+//checks that a sring contains only nested parents
+bool nestedParens(std::string s){
+	if(s.length() == 0){
+		return true;
+	}else if(s.length() == 1){
+		return false;
+	}else if(s.at(0) == '(' && s.at(s.length()-1) == ')'){
+		
+			return nestedParens(s.substr(1, s.length()-2));
+		
+	}
+		return false;
+	
+		
+}
