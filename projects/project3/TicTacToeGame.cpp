@@ -2,7 +2,7 @@
 Author: Alisherjon Turakulov
 Course: CS 135
 Instructor: Tong Yi
-Assignment: Project 3C
+Assignment: Project 3D
 
 implements the constructor and the member methods of TicTacToeGame
 */
@@ -10,7 +10,8 @@ implements the constructor and the member methods of TicTacToeGame
 //include class declaration
 #include "TicTacToeGame.hpp"
 
-//using namespace std;
+
+using namespace std;
 
 
 /**Default Constructor initializes tttBoard member using its default constructor
@@ -36,17 +37,20 @@ void TicTacToeGame::runRepeat(){
 	//bool start = true;
 	std::string continueInput{};
 	
+	start();
+	tttBoard.clear();
+	std::cout << "Do you want to continue (yes/no): ";
+	std::cin >> continueInput;
 	
-	do{
-/* 		if(start){
-			start = false;
-		}
- */		start();
-		
+	
+	while(continueInput == "yes" || continueInput.at(0) == 'y'){
+		start();
+		tttBoard.clear();
 		std::cout << "Do you want to continue (yes/no): ";
 		std::cin >> continueInput;
-		tttBoard.clear();
-	}while(continueInput == "yes" || continueInput.at(0) == 'y');
+	
+		
+	}
 	//std::cout << "exit runRepeat\n";
 }
 
@@ -84,7 +88,8 @@ void TicTacToeGame::start(){
 		round++;
 /* 		std::cout << "enter -1 to end";
 		std::cin >> debugContinue;
- */	}
+ */	
+ }
 }
 
 /**Check if the game is over
@@ -126,6 +131,61 @@ void TicTacToeGame::humanPlay(){
   *Checks for a win, a draw, and otherwise marks the first available cell
 */
 void TicTacToeGame::computerPlay(){
+	/*bool canWin{true};
+	bool canDraw{true};
+	const int SIZE{tttBoard.size()};
+	
+	for(int i{0}; i < SIZE; ++i){
+		for(int j={0}; j< SIZE; ++j){
+			if(tttBoard.isAvailable(i,j)){//only if the cell is empty
+				if(canWin){
+					tttBoard.mark(i, j, COMPUTER_ID);
+					if(tttBoard.win(i, j)){
+						currRow = i;
+						currCol = j;
+						std::cout << "chose first win\n";
+						return;
+					}
+					tttBoard.mark(i, j, ' ');
+					if(i == SIZE-1 && j == SIZE-1){
+						canWin=false;
+						i= 0;//will be 0 after this iteration
+						j= -1;
+						std::cout << "cant win\n";
+					}
+					
+				}else if(canDraw){
+					tttBoard.mark(i, j, HUMAN_ID);
+					if(tttBoard.win(i, j)){
+						tttBoard.mark(i, j, COMPUTER_ID);
+						currRow = i;
+						currCol = j;
+						std::cout << "chose first draw\n";
+						return;
+					}
+					tttBoard.mark(i, j, ' ');//unmark if cell wont draw
+					if(i==SIZE-1 && j == SIZE-1){
+						canDraw = false;
+						i= 0;
+						j= -1;
+						std::cout << "cant draw\n";
+					}
+				}else{
+					tttBoard.mark(i, j, COMPUTER_ID);
+					currRow = i;
+					currCol = j;
+					//i = SIZE;
+					//j = SIZE;
+					std::cout << "chose first available\n";
+					return;
+				}
+			}else if(i == SIZE-1 && j == SIZE-1){
+				std::cout << "none available\n";
+			}else{
+				std::cout << i << " " << j << " not available.\n";
+			}
+		}
+	}*/
 	bool canWin{true};
 	bool canDraw{true};
 	const int SIZE{tttBoard.size()};

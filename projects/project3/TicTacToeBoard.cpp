@@ -11,16 +11,11 @@ implements the constructor and the member methods of TicTacToeBoard
 #include <iostream>
 #include <string>
 
-using namespace std;
+//using namespace std;
 //Do not forget TicTacToeBoard:: before constructors and methods of TicTacToeBoard class
 //TODO: default constructor creates a 3x3 board 
 TicTacToeBoard::TicTacToeBoard(): TicTacToeBoard(3){
-	/*for(int i =0; i<3; ++i){
-		// intiialize each row with 3 spaces
-		std::vector<char> row(3, ' ');
-		board.push_back(row);
-		
-	}*/
+	
 }
 
 //TODO: If givenSize is less than 3, create a 3x3 board.
@@ -32,8 +27,8 @@ TicTacToeBoard::TicTacToeBoard(int givenSize) {
 	}
 	//std::cout << "constructor: \n";
 	for(int i =0 ;i<size; ++i){
-		vector<char> aRow(size, ' ');
-		this->board.push_back(aRow);
+		std::vector<char> aRow(size, ' ');
+		board.push_back(aRow);
 		//std::cout << "at " << i << "," << i << ":" << board[i][i] << '\n';
 	}
 	
@@ -60,7 +55,7 @@ void TicTacToeBoard::clear() {
 //needs to return a value of that return type in every execution path.
 char TicTacToeBoard::getValue(int row, int col) const {
 	if(isValidRow(row) && isValidCol(col)){
-		return this->board[row][col];
+		return board[row][col];
 	}
     return 'W'; 
 }
