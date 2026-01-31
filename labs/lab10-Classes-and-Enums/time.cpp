@@ -13,7 +13,7 @@ implements functions interacting with Movie and Enum objects and timeslots
 #include <string>
 using namespace std;
 //class and enum definitions
-class Time { 
+class Time {
 public:
     int h;
     int m;
@@ -25,15 +25,15 @@ void printTime(Time time) {
 
 enum Genre {ACTION, COMEDY, DRAMA, ROMANCE, THRILLER};
 
-class Movie { 
-public: 
+class Movie {
+public:
     string title;
     Genre genre;     // only one genre per movie
     int duration;    // in minutes
 };
 
-class TimeSlot { 
-public: 
+class TimeSlot {
+public:
     Movie movie;     // what movie
     Time startTime;  // when it starts
 };
@@ -72,7 +72,7 @@ Time addMinutes(Time time0, int min){
         extra = time0.m+m -60;
         h++;
     }
-   
+
     Time added = {(time0.h + h), (time0.m + extra) };
     return added;
 }
@@ -101,7 +101,7 @@ bool timeOverlap(TimeSlot ts1, TimeSlot ts2){
     bool over = false;
     if(minutesSinceMidnight(ts1.startTime) < minutesSinceMidnight(ts2.startTime)){
         interval_start = minutesUntil(ts1.startTime, ts2.startTime);
-        
+
         if(minutesSinceMidnight(ts2.startTime) < (minutesSinceMidnight(ts1.startTime)+ts1.movie.duration) ){
             over = true;
         }
@@ -129,7 +129,7 @@ int main(){
     std::cout << '\n';
     std::cout << "These moments of time are " << X << " and " << Y << " minutes after midnight.\n";
     std::cout << "The interval between them is " << Z << " minutes.\n";
-    
+
     std::cout <<"Enter minutes to add: ";
     int m2add{};
     std::cin >> m2add;
@@ -159,7 +159,7 @@ int main(){
     std::cout <<timeOverlap(day2, day3) << std::endl;
     day3.startTime.m = 29;
    std::cout << timeOverlap(day3, day2) << std::endl;
-    
+
 
 
     return 0;
