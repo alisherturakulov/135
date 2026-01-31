@@ -5,9 +5,27 @@ class TicTacToeGame {
 public:
     TicTacToeGame();
 	TicTacToeGame(int size);
+	
+	//Play a game.
+    //Once it finishes, ask the user whether they want to play again,
+    //"Do you want to continue (yes/no): ",
+    //Continue the game as long as the user enters "yes" or 'y'.
+    //Reset each cell of the board to be a space character
+    //by calling clear method of TicTacToeBoard
     void runRepeat();
-   	//start to play the game
-	void start();
+	
+	
+   	//(1) Print the empty board.
+	//(2) The human plays first, followed by the computer.
+	//(3) Start round by 1.
+	//(4) In each round, a player selects a cell.
+	//(5) Continue until the game ends.
+	void start(); //start to play the game
+
+	//Return true if the game has ended -- either by a win or a tie.
+	//If the human wins, print "Human wins. Yay!!!".
+	//If the computer wins, print "Computer wins. Yuck.".
+	//If the game ends in a tie, print "It is a tie.".
 	bool isGameOver() const;
 	
 	//This is how the user plays:
